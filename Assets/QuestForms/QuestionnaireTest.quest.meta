@@ -8,3 +8,73 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 6f91a92a1db31374a96cd2dc74a1195f, type: 3}
+  pages:
+  - ID: 
+    containsImage: 0
+    header: header
+    instructions: 
+    scale:
+    - Nada ou muito ligeiramente
+    - Ligeiramente
+    - Moderadamente
+    - Bastante
+    questions:
+    - ID: 
+      containsImage: 0
+      typeName: 
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+    - ID: 
+      containsImage: 0
+      typeName: 
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+    - ID: 
+      containsImage: 0
+      typeName: 
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+  - ID: 
+    containsImage: 0
+    header: header
+    instructions: 
+    scale:
+    - Verdadeiro
+    - Falso
+    questions:
+    - ID: 
+      containsImage: 0
+      typeName: 
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+    - ID: 
+      containsImage: 0
+      typeName: 
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+    - ID: 
+      containsImage: 0
+      typeName: 
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+  - ID: 
+    containsImage: 0
+    header: header
+    instructions: 
+    scale: []
+    questions:
+    - ID: 
+      containsImage: 1
+      typeName: 
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+    - ID: 
+      containsImage: 1
+      typeName: 
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+    - ID: 
+      containsImage: 1
+      typeName: 
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
