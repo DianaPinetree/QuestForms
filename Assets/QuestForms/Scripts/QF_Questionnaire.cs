@@ -4,38 +4,45 @@ using UnityEngine;
 using System.IO;
 using System;
 
-public class QF_Questionnaire : ScriptableObject
+namespace QuestForms
 {
-    public Page[] pages;
-    public List<QF_ImagePair> images;
-}
+    public class QF_Questionnaire : ScriptableObject
+    {
+        public Page[] pages;
+        public List<QF_ImagePair> images;
+    }
 
-public class QuestionnaireElement 
-{
-    public string ID;
-    public bool containsImage;
-}
+    [System.Serializable]
+    public class QuestionnaireElement
+    {
+        public string ID;
+        public bool containsImage;
+    }
 
-[System.Serializable]
-public class Page : QuestionnaireElement
-{
-    public string header;
-    public string instructions;
-    public string[] scale;
-    public Question[] questions;
-}
+    [System.Serializable]
+    public class Page : QuestionnaireElement
+    {
+        public string header;
+        public string instructions;
+        [NonReorderable]
+        public string[] scale;
+        [NonReorderable]
+        public Question[] questions;
+    }
 
-[System.Serializable]
-public class Question : QuestionnaireElement 
-{
-    public string typeName;
-    public string question;
-    public bool mandatory;
-    public QuestionType type => (QuestionType)Enum.Parse(typeof(QuestionType), typeName);
-}
+    [System.Serializable]
+    public class Question : QuestionnaireElement
+    {
+        public string qType; // Question type Scale, Option
+        public string question;
+        public bool mandatory;
+        public QuestionType type => (QuestionType)Enum.Parse(typeof(QuestionType), qType);
+    }
 
-public enum QuestionType 
-{
-    Scale,
-    Option,
+    public enum QuestionType
+    {
+        Scale,
+        Option,
+        TextField
+    }
 }

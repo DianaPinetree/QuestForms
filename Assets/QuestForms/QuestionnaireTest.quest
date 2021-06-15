@@ -2,9 +2,9 @@
     "pages":
     [
         {
-            "pageID": "page name, page 1",
-            "header": "header",
-            "instructions": "",
+            "ID": "Questionario Parte 1",
+            "header": "Controlo A",
+            "instructions": "Esta linha explica o exercício/questão a realizar nesta pagina do questionário, pode ter multiplas linhas de texto e pode também ser não existente caso a página seja sequência de uma anterior com instruções",
             "scale":
             [
                 "Nada ou muito ligeiramente",
@@ -15,28 +15,28 @@
             "questions":
             [
                 {
-                    "questionID": "EVA_01Example",
+                    "ID": "EVA_01Example",
                     "qType": "Scale",
                     "question": "O que se está a perguntar",
                     "mandatory": "True"
                 },
                 {
-                    "questionID": "EVA_01Example",
+                    "ID": "EVA_02Example",
                     "qType": "Scale",
                     "question": "O que se está a perguntar",
-                    "mandatory": "True"
+                    "mandatory": "False"
                 },
                 {
-                    "questionID": "EVA_01Example",
+                    "ID": "EVA_03Example",
                     "qType": "Scale",
                     "question": "O que se está a perguntar",
-                    "mandatory": "True"
+                    "mandatory": "False"
                 }
             ]
         },
         {
-            "pageID": "page name, page 2",
-            "header": "header",
+            "ID": "Questionario Parte 2",
+            "header": "Controlo A",
             "instructions": "",
             "scale":
             [
@@ -46,33 +46,33 @@
             "questions":
             [
                 {
-                    "questionID": "EVA_01Example",
+                    "ID": "EVA_04Example",
                     "qType": "Scale",
                     "question": "O que se está a perguntar",
                     "mandatory": "True"
                 },
                 {
-                    "questionID": "EVA_01Example",
+                    "ID": "EVA_05Example",
                     "qType": "Scale",
                     "question": "O que se está a perguntar",
                     "mandatory": "True"
                 },
                 {
-                    "questionID": "EVA_01Example",
+                    "ID": "EVA_06Example",
                     "qType": "Scale",
                     "question": "O que se está a perguntar",
-                    "mandatory": "True"
+                    "mandatory": "False"
                 }
             ]
         },
         {
-            "pageID": "page name, page 3",
-            "header": "header",
+            "ID": "Questionario Parte 3",
+            "header": "Controlo B",
             "instructions": "",
             "questions":
             [
                 {
-                    "questionID": "EVA_01Example",
+                    "ID": "SRS_01Example",
                     "qType": "Option",
                     "question": "O que se está a perguntar",
                     "mandatory": "True",
@@ -80,14 +80,14 @@
 
                 },
                 {
-                    "questionID": "EVA_01Example",
+                    "ID": "SRS_02Example",
                     "qType": "Option",
                     "question": "O que se está a perguntar",
                     "mandatory": "True",
                     "containsImage": "True"
                 },
                 {
-                    "questionID": "EVA_01Example",
+                    "ID": "SRS_03Example",
                     "qType": "Option",
                     "question": "O que se está a perguntar",
                     "mandatory": "True",

@@ -2,8 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QF_ImagePair
+namespace QuestForms
 {
-    public string id;
-    public Sprite image;
+    [System.Serializable]
+    public class QF_ImagePair
+    {
+        public string id;
+        public Sprite image;
+        public ImageAnchor position;
+    }
+
+    public enum ImageAnchor
+    {
+        Before,
+        After,
+        Left,
+        Right
+    }
 }
