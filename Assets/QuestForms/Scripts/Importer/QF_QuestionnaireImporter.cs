@@ -11,7 +11,7 @@ namespace QuestForms.Internal
     [ScriptedImporter(4, "quest")]
     public class QF_QuestionnaireImporter : ScriptedImporter
     {
-        [SerializeField] private QF_Questionnaire quest;
+        [SerializeField]private QF_Questionnaire quest;
         private TextAsset questFile;
         public QF_Questionnaire Questionnaire => quest;
 
