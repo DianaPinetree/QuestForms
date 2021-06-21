@@ -11,12 +11,17 @@ namespace QuestForms.Internal
     [ScriptedImporter(4, "quest")]
     public class QF_QuestionnaireImporter : ScriptedImporter
     {
-        private QF_Questionnaire quest;
+        [SerializeField] private QF_Questionnaire quest;
+        private TextAsset questFile;
         public QF_Questionnaire Questionnaire => quest;
 
         public override void OnImportAsset(AssetImportContext ctx)
         {
-            TextAsset questFile = new TextAsset(File.ReadAllText(ctx.assetPath));
+            if (questFile == null) 
+            {
+                questFile = new TextAsset(File.ReadAllText(ctx.assetPath));
+            }
+            
             if (quest == null)
             {
                 quest = CreateAsset<QF_Questionnaire>(ctx.assetPath);
@@ -26,9 +31,13 @@ namespace QuestForms.Internal
                 quest.hideFlags = HideFlags.None;
 
                 quest.CreateImages();
+            }
 
+            if (questFile != null)
+            {
                 Texture2D thumb = (Texture2D)EditorGUIUtility.Load("Icons/QF_Importer Icon.png");
                 ctx.AddObjectToAsset("Form", questFile, thumb);
+                ctx.SetMainObject(questFile);
             }
         }
 
