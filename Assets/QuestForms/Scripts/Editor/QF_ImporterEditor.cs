@@ -4,43 +4,31 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.AssetImporters;
 using UnityEngine.UIElements;
+using QuestForms;
 
 namespace QuestForms.Internal
 {
-    [CustomEditor(typeof(QF_QuestionnaireImporter))]
-    public class QF_ImporterEditor : ScriptedImporterEditor
+    [CustomEditor(typeof(QF_Questionnaire))]
+    public class QF_ImporterEditor : Editor
     {
         const int IMAGE_PREVIEW_SIZE = 250;
-        QF_QuestionnaireImporter importer;
         QF_Questionnaire questSO;
         Vector2 scroll;
         SerializedProperty pagesProperty;
         SerializedProperty imageList;
-        SerializedObject questionnaire;
 
         bool[] foldoutStatus;
 
         Texture2D headerBackgroundTex;
         GUIStyle titleLabel;
 
-        public override void OnEnable()
+        public void OnEnable()
         {
-            base.OnEnable();
-
-            importer = target as QF_QuestionnaireImporter;
-            if (importer.quest == null)
-            {
-                importer.quest = ScriptableObject.CreateInstance<QF_Questionnaire>();
-                Debug.Log("Created new Questionnaire object");
-            }
-
             // Get properties
-            SerializedProperty temp = serializedObject.FindProperty("quest");
-            questionnaire = new SerializedObject(temp.objectReferenceValue);
-            pagesProperty = questionnaire.FindProperty("pages");
-            imageList = questionnaire.FindProperty("images");
+            pagesProperty = serializedObject.FindProperty("pages");
+            imageList = serializedObject.FindProperty("images");
 
-            questSO = importer.quest;
+            questSO = (QF_Questionnaire)target;
             Color c = new Color(74f / 255f, 74f / 255f, 74f / 255f);
             headerBackgroundTex = MakeTex(Screen.width, 1, c);
         }
@@ -52,7 +40,7 @@ namespace QuestForms.Internal
 
         public override void OnInspectorGUI()
         {
-            questionnaire.Update();
+            serializedObject.Update();
 
             titleLabel = new GUIStyle(EditorStyles.boldLabel);
             titleLabel.fontSize += 3;
@@ -66,10 +54,14 @@ namespace QuestForms.Internal
 
             // Draw Pages foldout
             DrawPagesFoldout();
-
-            questionnaire.ApplyModifiedProperties();
             serializedObject.ApplyModifiedProperties();
-            ApplyRevertGUI();
+
+            if (GUI.changed)
+            {
+                EditorUtility.SetDirty(questSO);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
         }
 
         private void DrawPagesFoldout()

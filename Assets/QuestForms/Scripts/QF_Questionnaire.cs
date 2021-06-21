@@ -13,7 +13,7 @@ namespace QuestForms
         public int numberOfImages;
         public List<QF_ImagePair> images = new List<QF_ImagePair>();
 
-        public bool ContainsImage(string id) 
+        public bool ContainsImage(string id)
         {
             return images.Any((x) => x.Equals(id));
         }
@@ -25,7 +25,7 @@ namespace QuestForms
             return images.FindIndex((x) => x.id == id);
         }
 
-        private void OnEnable()
+        public void CreateImages()
         {
             // Create images
             // Set Images
@@ -83,7 +83,7 @@ namespace QuestForms
         TextField
     }
 
-    public enum ScrollType 
+    public enum ScrollType
     {
         Scroll,
         SplitToPage

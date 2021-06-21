@@ -11,22 +11,50 @@ namespace QuestForms.Internal
     [ScriptedImporter(4, "quest")]
     public class QF_QuestionnaireImporter : ScriptedImporter
     {
-        public QF_Questionnaire quest;
+        private QF_Questionnaire quest;
+        public QF_Questionnaire Questionnaire => quest;
 
         public override void OnImportAsset(AssetImportContext ctx)
         {
+            TextAsset questFile = new TextAsset(File.ReadAllText(ctx.assetPath));
             if (quest == null)
             {
-                quest = ScriptableObject.CreateInstance<QF_Questionnaire>();
+                quest = CreateAsset<QF_Questionnaire>(ctx.assetPath);
                 Debug.Log("Created new Questionnaire SO from imported asset");
 
-                quest.pages = JsonUtility.FromJson<ImportQuest>(File.ReadAllText(ctx.assetPath)).pages;
+                quest.pages = JsonUtility.FromJson<ImportQuest>(questFile.text).pages;
                 quest.hideFlags = HideFlags.None;
-                ctx.AddObjectToAsset("Questionnaire", quest);
-                ctx.SetMainObject(quest);
 
-                EditorUtility.SetDirty(quest);
+                quest.CreateImages();
+
+                Texture2D thumb = (Texture2D)EditorGUIUtility.Load("Icons/QF_Importer Icon.png");
+                ctx.AddObjectToAsset("Form", questFile, thumb);
             }
+        }
+
+        public static T CreateAsset<T>(string path) where T : ScriptableObject
+        {
+            T asset = ScriptableObject.CreateInstance<T>();
+
+            if (path == "")
+            {
+                path = "Assets";
+            }
+            else if (Path.GetExtension(path) != "")
+            {
+                path = path.Replace(Path.GetFileName(path), "");
+            }
+
+            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/New " + typeof(T).Name + ".asset");
+
+            AssetDatabase.CreateAsset(asset, assetPathAndName);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = asset;
+
+            return asset;
         }
     }
 
