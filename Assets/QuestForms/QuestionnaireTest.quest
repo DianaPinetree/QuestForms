@@ -69,6 +69,7 @@
             "ID": "Questionario Parte 3",
             "header": "Controlo B",
             "instructions": "",
+            "containsImage": "True",
             "questions":
             [
                 {

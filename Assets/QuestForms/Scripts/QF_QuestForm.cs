@@ -8,6 +8,11 @@ namespace QuestForms
     {
         [SerializeField] private QF_Questionnaire questionnaire;
 
+        private void Awake()
+        {
+            PrintData();
+        }
+
         public void LoadQuestionnaire() 
         {
             // Cleanup Existing
@@ -33,6 +38,19 @@ namespace QuestForms
         public void CreateQuestions()
         {
         
+        }
+
+        private void PrintData() 
+        {
+            foreach(var page in questionnaire.pages) 
+            {
+                Debug.Log($"Page {page.ID}");
+                Debug.Log(page.scrollQuestions);
+                foreach(var question in page.questions) 
+                {
+                    
+                }
+            }
         }
     }
 }

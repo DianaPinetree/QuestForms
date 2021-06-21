@@ -10,25 +10,38 @@ namespace QuestForms.Internal
     [CustomEditor(typeof(QF_QuestionnaireImporter))]
     public class QF_ImporterEditor : ScriptedImporterEditor
     {
+        const int IMAGE_PREVIEW_SIZE = 250;
         QF_QuestionnaireImporter importer;
-        SerializedProperty questionnaire;
         QF_Questionnaire questSO;
         Vector2 scroll;
+        SerializedProperty pagesProperty;
+        SerializedProperty imageList;
+        SerializedObject questionnaire;
 
-        Editor questionnaireEditor;
         bool[] foldoutStatus;
 
         Texture2D headerBackgroundTex;
+        GUIStyle titleLabel;
 
         public override void OnEnable()
         {
             base.OnEnable();
 
             importer = target as QF_QuestionnaireImporter;
-            if (importer.quest == null) importer.quest = ScriptableObject.CreateInstance<QF_Questionnaire>();
-            questionnaire = serializedObject.FindProperty("quest");
-            questSO = questionnaire.objectReferenceValue as QF_Questionnaire;
-            Color c = new Color(74f / 255f, 74f / 255f, 74f/255f);
+            if (importer.quest == null)
+            {
+                importer.quest = ScriptableObject.CreateInstance<QF_Questionnaire>();
+                Debug.Log("Created new Questionnaire object");
+            }
+
+            // Get properties
+            SerializedProperty temp = serializedObject.FindProperty("quest");
+            questionnaire = new SerializedObject(temp.objectReferenceValue);
+            pagesProperty = questionnaire.FindProperty("pages");
+            imageList = questionnaire.FindProperty("images");
+
+            questSO = importer.quest;
+            Color c = new Color(74f / 255f, 74f / 255f, 74f / 255f);
             headerBackgroundTex = MakeTex(Screen.width, 1, c);
         }
 
@@ -39,17 +52,23 @@ namespace QuestForms.Internal
 
         public override void OnInspectorGUI()
         {
-            if (questSO != null)
-            {
-                // Draw page title
-                GUIStyle title = new GUIStyle(EditorStyles.boldLabel);
-                title.alignment = TextAnchor.MiddleCenter;
-                title.fontSize += 8;
-                GUILayout.Label(questSO.name, title);
+            questionnaire.Update();
 
-                // Draw Pages foldout
-                DrawPagesFoldout();
-            }
+            titleLabel = new GUIStyle(EditorStyles.boldLabel);
+            titleLabel.fontSize += 3;
+            titleLabel.normal.background = headerBackgroundTex;
+
+            // Draw page title
+            GUIStyle title = new GUIStyle(EditorStyles.boldLabel);
+            title.alignment = TextAnchor.MiddleCenter;
+            title.fontSize += 8;
+            GUILayout.Label(questSO.name, title);
+
+            // Draw Pages foldout
+            DrawPagesFoldout();
+
+            questionnaire.ApplyModifiedProperties();
+            serializedObject.ApplyModifiedProperties();
             ApplyRevertGUI();
         }
 
@@ -58,22 +77,50 @@ namespace QuestForms.Internal
             if (foldoutStatus == null)
             {
                 foldoutStatus = new bool[questSO.pages.Length];
+                foldoutStatus[0] = true;
             }
+
+            // Header
+            GUILayout.BeginVertical("box");
+            EditorGUILayout.LabelField("Navigation", titleLabel);
+            scroll = GUILayout.BeginScrollView(scroll);
+            EditorGUILayout.BeginHorizontal();
+            for (int i = 0; i < foldoutStatus.Length; i++)
+            {
+                if (GUILayout.Button($"Pg. {i + 1}"))
+                {
+                    // Expand selected
+                    foldoutStatus[i] = true;
+                    // Close the rest
+                    for (int k = 0; k < foldoutStatus.Length; k++)
+                    {
+                        if (i == k) continue;
+                        foldoutStatus[k] = false;
+                    }
+                }
+            }
+
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.EndScrollView();
+            GUILayout.EndVertical();
+
+            GUILayout.Space(5);
 
             for (int p = 0; p < questSO.pages.Length; p++)
             {
                 Page page = questSO.pages[p];
-                foldoutStatus[p] = EditorGUILayout.BeginFoldoutHeaderGroup(foldoutStatus[p], $"Page {p + 1}: {page.ID}");
 
                 // Page
                 if (foldoutStatus[p])
                 {
-                    DrawPage(page);
-                }
 
-                // Close this page group
-                EditorGUILayout.EndFoldoutHeaderGroup();
-                EditorGUILayout.Separator();
+                    // Start page content
+                    GUILayout.BeginVertical($"Page {p + 1} -- {page.ID}", "window");
+                    DrawPage(p);
+                    // End Page Content
+                    GUILayout.EndVertical();
+                }
                 // Update SO with modifications made
                 questSO.pages[p] = page;
             }
@@ -93,13 +140,35 @@ namespace QuestForms.Internal
             return result;
         }
 
-        private void DrawPage(Page page)
+        private void DrawImagePreview(SerializedProperty pair)
         {
-            GUIStyle titleLabel = new GUIStyle(EditorStyles.boldLabel);
-            titleLabel.fontSize += 3;
-            titleLabel.normal.background = headerBackgroundTex;
-            // Start page content
-            GUILayout.BeginVertical("Page Content", "window");
+            GUILayout.Label("Image", titleLabel);
+            SerializedProperty anchor = pair.FindPropertyRelative("position");
+            SerializedProperty image = pair.FindPropertyRelative("image");
+
+            anchor.enumValueIndex = (int)(ImageAnchor)EditorGUILayout.EnumPopup((ImageAnchor)anchor.enumValueIndex);
+            image.objectReferenceValue = (Sprite)EditorGUILayout.ObjectField(image.objectReferenceValue, typeof(Sprite), false);
+
+
+            if (image.objectReferenceValue != null)
+            {
+                Texture tex = (image.objectReferenceValue as Sprite).texture;
+                Rect imageRect = (image.objectReferenceValue as Sprite).rect;
+                if ((ImageAnchor)anchor.enumValueIndex == ImageAnchor.Right)
+                {
+                    GUILayout.FlexibleSpace();
+                }
+
+                float ratio = imageRect.height / imageRect.width;
+                Rect r = EditorGUILayout.GetControlRect(GUILayout.MaxHeight(IMAGE_PREVIEW_SIZE), GUILayout.MaxWidth(IMAGE_PREVIEW_SIZE / ratio));
+                EditorGUI.DrawPreviewTexture(r, tex);
+            }
+        }
+
+        private void DrawPage(int pageIndex)
+        {
+            Page page = questSO.pages[pageIndex];
+            SerializedProperty pageProperty = pagesProperty.GetArrayElementAtIndex(pageIndex);
 
             GUILayout.Label("Header", titleLabel);
             EditorGUI.indentLevel++;
@@ -107,6 +176,7 @@ namespace QuestForms.Internal
             EditorGUI.indentLevel--;
 
             GUILayout.Label("Instructions", titleLabel);
+
             // Indent forward
             EditorGUI.indentLevel++;
 
@@ -124,6 +194,16 @@ namespace QuestForms.Internal
             }
             EditorGUI.indentLevel--;
 
+            GUILayout.Label("Page Format", titleLabel);
+            PageFormat(pageProperty);
+
+            if (questSO.ContainsImage(page.ID))
+            {
+                int index = questSO.ImagePair(page.ID);
+                
+                DrawImagePreview(imageList.GetArrayElementAtIndex(index));
+            }
+
             // Draw questions and check if there is a scale being used
             GUILayout.Label("Questions", titleLabel);
             // Draw and if there is a scale
@@ -133,9 +213,20 @@ namespace QuestForms.Internal
                 // Draw scale
                 DrawScale(page.scale);
             }
+        }
 
-            // End Page Content
-            GUILayout.EndVertical();
+        private void PageFormat(SerializedProperty page)
+        {
+            SerializedProperty scrollformat = page.FindPropertyRelative("scrollQuestions");
+            // Scroll questions bool
+
+            scrollformat.enumValueIndex = (int)(ScrollType)EditorGUILayout.EnumPopup((ScrollType)scrollformat.enumValueIndex);
+
+            if ((ScrollType)(scrollformat.enumValueIndex) == ScrollType.SplitToPage)
+            {
+                var questions = page.FindPropertyRelative("questions");
+                GUILayout.Label($"Split into: {QF_Rules.QuestionsPerPage / questions.arraySize} page", EditorStyles.boldLabel);
+            }
         }
 
         // Returns if the drawn questions use a Scale or are option based
@@ -167,13 +258,19 @@ namespace QuestForms.Internal
             {
                 GUILayout.BeginVertical("box");
             }
-            
+
             GUIStyle questionHeader = new GUIStyle(EditorStyles.boldLabel);
             questionHeader.fontSize += 1;
             GUILayout.Label(q.ID + "  " + (q.mandatory ? "(Mandatory)" : ""), questionHeader);
 
             BoldBlock("Type: ", q.qType);
             BoldBlock("Question: ", q.question);
+
+            if (questSO.ContainsImage(q.ID))
+            {
+                int index = questSO.ImagePair(q.ID);
+                DrawImagePreview(imageList.GetArrayElementAtIndex(index));
+            }
 
             GUILayout.EndVertical();
         }
@@ -189,7 +286,7 @@ namespace QuestForms.Internal
             GUILayout.EndHorizontal();
         }
 
-        private void BoldBlock(string header, string content) 
+        private void BoldBlock(string header, string content)
         {
             GUILayout.BeginHorizontal();
             GUILayout.Label(header, EditorStyles.boldLabel);

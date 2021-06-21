@@ -3,37 +3,74 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using System.Linq;
 
 namespace QuestForms
 {
     public class QF_Questionnaire : ScriptableObject
     {
         public Page[] pages;
-        public List<QF_ImagePair> images;
+        public int numberOfImages;
+        public List<QF_ImagePair> images = new List<QF_ImagePair>();
+
+        public bool ContainsImage(string id) 
+        {
+            return images.Any((x) => x.Equals(id));
+        }
+
+        // Index of the image pair corresponding to the ID
+        public int ImagePair(string id)
+        {
+            if (!ContainsImage(id)) return -1;
+            return images.FindIndex((x) => x.id == id);
+        }
+
+        private void OnEnable()
+        {
+            // Create images
+            // Set Images
+            if (pages == null) return;
+
+            for (int i = 0; i < pages.Length; i++)
+            {
+                Page page = pages[i];
+                if (page.containsImage && !ContainsImage(page.ID))
+                {
+                    images.Add(new QF_ImagePair(page.ID));
+                }
+
+                for (int q = 0; q < page.questions.Length; q++)
+                {
+                    Question question = page.questions[q];
+
+                    if (question.containsImage && !ContainsImage(question.ID))
+                    {
+                        images.Add(new QF_ImagePair(question.ID));
+                    }
+                }
+            }
+            numberOfImages = images.Count;
+        }
     }
 
     [System.Serializable]
-    public class QuestionnaireElement
+    public class Page
     {
         public string ID;
         public bool containsImage;
-    }
-
-    [System.Serializable]
-    public class Page : QuestionnaireElement
-    {
         public string header;
         public string instructions;
-        [NonReorderable]
         public string[] scale;
-        [NonReorderable]
         public Question[] questions;
+        public ScrollType scrollQuestions;
     }
 
     [System.Serializable]
-    public class Question : QuestionnaireElement
+    public class Question
     {
-        public string qType; // Question type Scale, Option
+        public string ID;
+        public bool containsImage;
+        public string qType; // Question type Scale, Option, TextField
         public string question;
         public bool mandatory;
         public QuestionType type => (QuestionType)Enum.Parse(typeof(QuestionType), qType);
@@ -44,5 +81,11 @@ namespace QuestForms
         Scale,
         Option,
         TextField
+    }
+
+    public enum ScrollType 
+    {
+        Scroll,
+        SplitToPage
     }
 }

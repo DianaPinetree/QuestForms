@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0bd6629d5ba571498fb9b3f1a903926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionnaire: {fileID: 0}
+  questionnaire: {fileID: 7502988750355656248, guid: 97a557e3667996447822de4586d0d8b2, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
