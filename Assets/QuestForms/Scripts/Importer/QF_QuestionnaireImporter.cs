@@ -26,12 +26,12 @@ namespace QuestForms.Internal
             {
                 quest = CreateAsset<QF_Questionnaire>(ctx.assetPath);
                 Debug.Log("Created new Questionnaire SO from imported asset");
-
-                quest.pages = JsonUtility.FromJson<ImportQuest>(questFile.text).pages;
-                quest.hideFlags = HideFlags.None;
-
-                quest.CreateImages();
             }
+
+            quest.pages = JsonUtility.FromJson<ImportQuest>(questFile.text).pages;
+            quest.hideFlags = HideFlags.None;
+
+            quest.CreateImages();
 
             if (questFile != null)
             {

@@ -118,7 +118,7 @@ namespace QuestForms.Internal
             }
         }
 
-        private Texture2D MakeTex(int width, int height, Color col)
+        public static Texture2D MakeTex(int width, int height, Color col)
         {
             Color[] pix = new Color[width * height];
 

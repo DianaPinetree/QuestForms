@@ -19,7 +19,9 @@ MonoBehaviour:
     instructions: "Esta linha explica o exerc\xEDcio/quest\xE3o a realizar nesta
       pagina do question\xE1rio, pode ter multiplas linhas de texto e pode tamb\xE9m
       ser n\xE3o existente caso a p\xE1gina seja sequ\xEAncia de uma anterior com
-      instru\xE7\xF5es"
+      instru\xE7\xF5es. As instru\xE7\xF5es n\xE3o contam para o n\xFAmero de elementos
+      na p\xE1gina, sendo poss\xEDvel haver instru\xE7\xF5es mais as 6 perguntas
+      m\xE1ximas da p\xE1gina"
     scale:
     - Nada ou muito ligeiramente
     - Ligeiramente
@@ -69,7 +71,10 @@ MonoBehaviour:
   - ID: Questionario Parte 3
     containsImage: 1
     header: Controlo B
-    instructions: 
+    instructions: "Esta linha explica o exerc\xEDcio/quest\xE3o a realizar nesta
+      pagina do question\xE1rio, pode ter multiplas linhas de texto e pode tamb\xE9m
+      ser n\xE3o existente caso a p\xE1gina seja sequ\xEAncia de uma anterior com
+      instru\xE7\xF5es"
     scale: []
     questions:
     - ID: SRS_01Example

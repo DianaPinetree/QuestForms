@@ -4,7 +4,7 @@
         {
             "ID": "Questionario Parte 1",
             "header": "Controlo A",
-            "instructions": "Esta linha explica o exercício/questão a realizar nesta pagina do questionário, pode ter multiplas linhas de texto e pode também ser não existente caso a página seja sequência de uma anterior com instruções",
+            "instructions": "Esta linha explica o exercício/questão a realizar nesta pagina do questionário, pode ter multiplas linhas de texto e pode também ser não existente caso a página seja sequência de uma anterior com instruções. As instruções não contam para o número de elementos na página, sendo possível haver instruções mais as 6 perguntas máximas da página",
             "scale":
             [
                 "Nada ou muito ligeiramente",
@@ -68,7 +68,7 @@
         {
             "ID": "Questionario Parte 3",
             "header": "Controlo B",
-            "instructions": "",
+            "instructions": "Esta linha explica o exercício/questão a realizar nesta pagina do questionário, pode ter multiplas linhas de texto e pode também ser não existente caso a página seja sequência de uma anterior com instruções",
             "containsImage": "True",
             "questions":
             [
