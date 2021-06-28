@@ -135,7 +135,7 @@ namespace QuestForms
             var group = content.gameObject.AddComponent<VerticalLayoutGroup>();
             group.padding = new RectOffset(5, 5, 5, 10);
             group.childControlWidth = true;
-            group.childControlHeight = true;
+            group.childControlHeight = false;
             group.spacing = 5;
             group.childForceExpandHeight = false;
 
@@ -145,15 +145,27 @@ namespace QuestForms
             instructions.text = "   " + page.instructions;
 
             bool scaleQuestion = false;
+            QF_Scale scaleGroup = null;
             for (int i = 0; i < page.questions.Length; i++)
             {
                 Question q = page.questions[i];
-                if (q.type == QuestionType.Scale && !scaleQuestion) 
+                if (q.type == QuestionType.Scale) 
                 {
-                    // Instantiate scale
+                    if (!scaleQuestion)
+                    {
+                        // Instantiate scale
+                        GameObject scale = Resources.Load<GameObject>("QF_ScaleElement");
+                        scale = Instantiate(scale, content);
+                        scaleGroup = scale.AddComponent<QF_Scale>();
+                        scaleGroup.SetScale(page.scale);
+                    }
 
-
+                    if (scaleGroup != null) scaleGroup.AddQuestion(q);
                     scaleQuestion = true;
+                }
+                else 
+                {
+                    scaleQuestion = false;
                 }
 
             }

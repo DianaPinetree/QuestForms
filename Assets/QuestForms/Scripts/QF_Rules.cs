@@ -19,7 +19,7 @@ namespace QuestForms
         public static TMP_FontAsset TextFont { get => textFont;}
         public static TMP_FontAsset HeaderFont { get => headerFont;}
         public static int QuestionsPerPage { get => questionsPerPage;}
-
+        public static GameObject Seperator => Resources.Load<GameObject>("QF_Seperator");
 
 
         [MenuItem("Tools/QuestForms/Create Questionnaire")]
