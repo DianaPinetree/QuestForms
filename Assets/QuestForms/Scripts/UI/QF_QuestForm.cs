@@ -31,17 +31,25 @@ namespace QuestForms
             pageDisplayIndex = 0;
         }
 
-        
+        private void Start()
+        {
+            SetPage(pageDisplayIndex, true);
+        }
+
         public void NextPage() 
         {
+            SetPage(pageDisplayIndex, false);
+            pageDisplayIndex = Mathf.Clamp((pageDisplayIndex + 1), 0, Pages.Count - 1);
+            SetPage(pageDisplayIndex, true);
             Debug.Log("Next Questionnaire Page");
-
         }
 
         public void PreviousPage() 
         {
+            SetPage(pageDisplayIndex, false);
+            pageDisplayIndex = Mathf.Clamp((pageDisplayIndex - 1), 0, Pages.Count - 1);
+            SetPage(pageDisplayIndex, true);
             Debug.Log("Previous Questionnaire Page");
-
         }
 
         public void SetPage(QF_Page page, bool state) 

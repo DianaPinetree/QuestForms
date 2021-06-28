@@ -32,6 +32,12 @@ namespace QuestForms
 
         public void ClearAnswers() 
         {
+            var elements = GetComponentsInChildren<QF_PageElement>();
+            foreach(var ele in elements) 
+            {
+                ele.Clear();
+            }
+
             Debug.Log("Cleared Answers");
         }
 
@@ -48,7 +54,7 @@ namespace QuestForms
         private void SetupButtons() 
         {
             Page page = manager.QuestSource.pages[pageIndex];
-            int count = QF_Rules.QuestionsPerPage / page.questions.Length;
+            int count = (page.questions.Length / QF_Rules.QuestionsPerPage) + 1 ;
 
             back.onClick.AddListener(manager.PreviousPage);
             next.onClick.AddListener(manager.NextPage);
@@ -95,8 +101,8 @@ namespace QuestForms
             else 
             {
                 // Page control
-                pageNext = transform.Find("PageControl/Previous").GetComponent<Button>();
-                pagePrevious = transform.Find("PageControl/Next").GetComponent<Button>();
+                pageNext = transform.Find("PageControl/Next").GetComponent<Button>();
+                pagePrevious = transform.Find("PageControl/Previous").GetComponent<Button>();
                 pageCount = transform.Find("PageControl/Page Number").GetComponent<TextMeshProUGUI>();
             }
 

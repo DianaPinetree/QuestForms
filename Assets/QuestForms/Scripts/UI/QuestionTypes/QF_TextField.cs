@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
-public class QF_TextField : MonoBehaviour
+public class QF_TextField : QF_PageElement
 {
-    // Start is called before the first frame update
-    void Start()
+    private TMP_InputField inputField;
+
+    public override void Clear()
     {
-        
+        inputField.text = string.Empty;   
     }
 
-    // Update is called once per frame
-    void Update()
+    public override bool Valid()
     {
-        
+        throw new System.NotImplementedException();
     }
 }

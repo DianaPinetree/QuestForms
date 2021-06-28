@@ -5,9 +5,12 @@ using TMPro;
 
 namespace QuestForms
 {
-    public class QF_Scale : MonoBehaviour
+    /// <summary>
+    /// Scale group question
+    /// </summary>
+    public class QF_Scale : QF_PageElement
     {
-        private List<Question> questions = new List<Question>();
+        [HideInInspector] public List<QF_ScaleQuestion> questions = new List<QF_ScaleQuestion>();
         private Transform scaleHeader;
         private GameObject scaleTextObject;
 
@@ -36,10 +39,14 @@ namespace QuestForms
 
             ele.QuestionText.text = q.question;
             ele.AddToggles(choices);
-            questions.Add(q);
+            questions.Add(ele);
             Instantiate(QF_Rules.Seperator, transform);
         }
 
+        /// <summary>
+        /// Sets the scale for this scale question
+        /// </summary>
+        /// <param name="scale">Scale devided by string</param>
         public void SetScale(string[] scale) 
         {
             if (scale == null) return;
@@ -58,6 +65,23 @@ namespace QuestForms
             scaleTextObject = scaleHeader.GetChild(0).gameObject;
 
             Instantiate(QF_Rules.Seperator, transform);
+        }
+
+        public override bool Valid()
+        {
+            bool valid = false;
+
+            foreach(var question in questions) 
+            {
+                valid |= question.Valid();
+            }
+
+            return valid;
+        }
+
+        public override void Clear()
+        {
+            
         }
     }
 }

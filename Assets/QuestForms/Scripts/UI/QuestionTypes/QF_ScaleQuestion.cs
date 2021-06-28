@@ -1,13 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Linq;
 
 namespace QuestForms
 {
-    public class QF_ScaleQuestion : MonoBehaviour
+    /// <summary>
+    /// A unique line in a scale group questin
+    /// </summary>
+    public class QF_ScaleQuestion : QF_PageElement
     {
         private TextMeshProUGUI questionText;
         private ToggleGroup group;
@@ -48,19 +49,28 @@ namespace QuestForms
             {
                 Toggle t = toggles[i];
                 toggles[i].onValueChanged.AddListener(delegate { ToggleSelected(t); });
+                t.isOn = false;
             }
-
-            Toggles.SetAllTogglesOff();
         }
 
+        /// <summary>
+        /// Toggle callback
+        /// </summary>
+        /// <param name="selected">The selected toggle on this callback</param>
         public void ToggleSelected(Toggle selected) 
         {
-            if (!selected.isOn) return;
+            if (!selected.isOn) 
+            {
+#if UNITY_EDITOR
+                gameObject.name = string.Format("QF_SQuestion", Answer);
+#endif
+                return;
+            }
             int choices = scale.ScaleChoices;
 
             for (int i = 0; i < choices; i++)
             {
-                if (group.transform.GetChild(i).gameObject == selected.gameObject) 
+                if (Toggles.transform.GetChild(i).gameObject == selected.gameObject) 
                 {
                     Answer = i;
 #if UNITY_EDITOR
@@ -70,6 +80,10 @@ namespace QuestForms
             }
         }
 
+        /// <summary>
+        /// Creates count amount of toggles for this scale question EDITOR ONLY
+        /// </summary>
+        /// <param name="count"> Number of toggles to create</param>
         public void AddToggles(int count)
         {
             toggles = new List<Toggle>();
@@ -82,11 +96,22 @@ namespace QuestForms
                 var obj = Instantiate(togglePrefab, Toggles.transform);
                 var togl = obj.GetComponent<Toggle>();
                 togl.group = Toggles;
+                togl.isOn = false;
                 toggles.Add(togl);
             }
 
             Toggles.SetAllTogglesOff();
             DestroyImmediate(togglePrefab);
+        }
+
+        public override bool Valid()
+        {
+            return Toggles.AnyTogglesOn();
+        }
+
+        public override void Clear()
+        {
+            Toggles.SetAllTogglesOff();
         }
     }
 }
