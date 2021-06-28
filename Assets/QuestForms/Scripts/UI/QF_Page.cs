@@ -135,7 +135,8 @@ namespace QuestForms
             var group = content.gameObject.AddComponent<VerticalLayoutGroup>();
             group.padding = new RectOffset(5, 5, 5, 10);
             group.childControlWidth = true;
-            group.childControlHeight = false;
+            group.childControlHeight = true;
+            group.childScaleHeight = true;
             group.spacing = 5;
             group.childForceExpandHeight = false;
 

@@ -12,6 +12,12 @@ namespace QuestForms
         private GameObject scaleTextObject;
 
         private int choices = -1;
+        public int ScaleChoices => choices;
+
+        private void Awake()
+        {
+            choices = transform.Find("Scale").childCount;
+        }
 
         /// <summary>
         /// Adds a question to this group scale question

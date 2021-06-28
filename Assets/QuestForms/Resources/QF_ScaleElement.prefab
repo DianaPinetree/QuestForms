@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6216621671132439530}
   - component: {fileID: 6216621671132439532}
-  - component: {fileID: 6216621671132439531}
+  - component: {fileID: 5177518968845420678}
   m_Layer: 5
   m_Name: QF_ScaleElement
   m_TagString: Untagged
@@ -62,9 +62,9 @@ MonoBehaviour:
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
+  m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
---- !u!114 &6216621671132439531
+--- !u!114 &5177518968845420678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
