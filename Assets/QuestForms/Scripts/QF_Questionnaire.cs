@@ -62,6 +62,7 @@ namespace QuestForms
         public string instructions;
         public string[] scale;
         public Question[] questions;
+        public bool randomizeOrder;
         public ScrollType scrollQuestions;
     }
 

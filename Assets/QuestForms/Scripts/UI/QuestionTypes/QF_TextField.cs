@@ -11,11 +11,14 @@ namespace QuestForms
     {
         [SerializeField] private bool showCurrentCharacter = true;
         [SerializeField] private int baseLines = 5;
-
-        private TMP_InputField inputField;
         [SerializeField] private int characterMin;
         [SerializeField] private int characterMax;
 
+        private TMP_InputField inputField;
+        private TextMeshProUGUI characterCountField;
+        private TextMeshProUGUI minimumCharacterField;
+
+        private int currentCharacterCount;
         private Scrollbar scroll;
         private Scrollbar Scroll 
         {
@@ -33,26 +36,40 @@ namespace QuestForms
         private void Awake()
         {
             inputField = GetComponentInChildren<TMP_InputField>();
+            characterCountField = transform.Find("Footer/Character Count").GetComponent<TextMeshProUGUI>();
+            minimumCharacterField = transform.Find("Footer/Minimum").GetComponent<TextMeshProUGUI>();
+            
             inputField.characterLimit = characterMax;
+            inputField.onValueChanged.AddListener(UpdateCharacterCount);
+            characterCountField.text = currentCharacterCount.ToString() + "/" + characterMax.ToString();
+
+            if (Mandatory) 
+            {
+                minimumCharacterField.text = $"(Minimo de {characterMin} Caracteres)";
+            }
+            else 
+            {
+                minimumCharacterField.text = "";
+            }
+        }
+
+        public void UpdateCharacterCount(string text) 
+        {
+            currentCharacterCount = text.Length;
+            characterCountField.text = currentCharacterCount.ToString() + "/" + characterMax.ToString();
         }
 
         public void SetCharacterLimits(int min, int max)
         {
             characterMin = min;
             characterMax = max;
-            HideScrollBar();
+            SetScrollbarVisibility(false);
         }
 
-        public void ShowScrollBar() 
+        public void SetScrollbarVisibility(bool value) 
         {
-            Scroll.gameObject.SetActive(true);
-            inputField.verticalScrollbar = Scroll;
-        }
-
-        public void HideScrollBar()
-        {
-            Scroll.gameObject.SetActive(false);
-            inputField.verticalScrollbar = null;
+            Scroll.gameObject.SetActive(value);
+            inputField.verticalScrollbar = value ? Scroll : null;
         }
 
         public override void Clear()
@@ -74,6 +91,11 @@ namespace QuestForms
             inputField = GetComponentInChildren<TMP_InputField>();
             var rt = (inputField.transform as RectTransform);
             rt.sizeDelta = new Vector2(rt.sizeDelta.x, height);
+
+            if (showCurrentCharacter) 
+            {
+                
+            }
         }
 #endif
     }

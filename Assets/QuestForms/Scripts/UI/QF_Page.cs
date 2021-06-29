@@ -12,7 +12,7 @@ namespace QuestForms
         [SerializeField] private int pageIndex;
         [SerializeField] private QF_QuestForm manager;
 
-        private List<RectTransform> content;
+        [SerializeField, HideInInspector]private List<RectTransform> content;
         private int contentDisplayIndex;
 
         // UI elements
@@ -100,12 +100,12 @@ namespace QuestForms
             back = transform.Find("QuestionnaireControl/Back").GetComponent<Button>();
             clear = transform.Find("QuestionnaireControl/Clear").GetComponent<Button>();
             next = transform.Find("QuestionnaireControl/Continue").GetComponent<Button>();
-
-            if (page.scrollQuestions != ScrollType.SplitToPage)
+            GameObject pageControl = transform.Find("PageControl").gameObject;
+            if (page.scrollQuestions != ScrollType.SplitToPage || (QF_Rules.QuestionsPerPage / page.questions.Length <= 1))
             {
-                transform.Find("PageControl").gameObject.SetActive(false);
+                pageControl.SetActive(false);
             }
-            else 
+            else
             {
                 // Page control
                 pageNext = transform.Find("PageControl/Next").GetComponent<Button>();
@@ -190,6 +190,9 @@ namespace QuestForms
             int questionIndex = 0;
             GameObject g = Resources.Load<GameObject>("QF_QuestionGroup");
             QF_QuestionGroup qGroup = null;
+
+            List<Question> pageQuestions = new List<Question>(page.questions);
+            
             for (int i = 0; i < page.questions.Length; i++)
             {
                 Question q = page.questions[i];
@@ -218,7 +221,6 @@ namespace QuestForms
                 else 
                 {
                     questionIndex++;
-                    scaleQuestion = false;
                     qGroup = Instantiate(g, content).GetComponent<QF_QuestionGroup>();
                     GameObject questionText = ContentText(content, $"{questionIndex}. ", q.question);
                     qGroup.AddElement(questionText);
@@ -233,6 +235,26 @@ namespace QuestForms
                     textField.SetCharacterLimits(q.characterMin, q.characterMax);
                     qGroup?.AddElement(field);
                 }
+            }
+
+        }
+
+        /// <summary>
+        /// Shuffle a list
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        public static void Shuffle<T>(IList<T> list)
+        {
+            System.Random rng = new System.Random();
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
             }
         }
     }

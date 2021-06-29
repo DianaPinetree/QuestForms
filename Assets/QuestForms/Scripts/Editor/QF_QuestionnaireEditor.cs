@@ -180,8 +180,8 @@ namespace QuestForms.Internal
             }
             EditorGUI.indentLevel--;
 
-            GUILayout.Label("Page Format", titleLabel);
-            PageFormat(pageProperty);
+            GUILayout.Label("Page Settings", titleLabel);
+            PageSettings(pageProperty);
 
             if (questSO.ContainsImage(page.ID))
             {
@@ -202,18 +202,21 @@ namespace QuestForms.Internal
             }
         }
 
-        private void PageFormat(SerializedProperty page)
+        private void PageSettings(SerializedProperty page)
         {
             SerializedProperty scrollformat = page.FindPropertyRelative("scrollQuestions");
+            SerializedProperty randomizeOrder = page.FindPropertyRelative("randomizeOrder");
             // Scroll questions bool
 
-            scrollformat.enumValueIndex = (int)(ScrollType)EditorGUILayout.EnumPopup((ScrollType)scrollformat.enumValueIndex);
+            scrollformat.enumValueIndex = (int)(ScrollType)EditorGUILayout.EnumPopup("Page Scroll Type: ",(ScrollType)scrollformat.enumValueIndex);
 
             if ((ScrollType)(scrollformat.enumValueIndex) == ScrollType.SplitToPage)
             {
                 var questions = page.FindPropertyRelative("questions");
                 GUILayout.Label($"Split into: {QF_Rules.QuestionsPerPage / questions.arraySize} page", EditorStyles.boldLabel);
             }
+
+            randomizeOrder.boolValue =  EditorGUILayout.Toggle("Randomize Question Order", randomizeOrder.boolValue);
         }
 
         // Returns if the drawn questions use a Scale or are option based
