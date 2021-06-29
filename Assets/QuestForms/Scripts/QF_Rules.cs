@@ -13,14 +13,22 @@ namespace QuestForms
     public class QF_Rules
     {
         private static int questionsPerPage = 6;
+        private static int questionSpacing = 25;
+        private static int questionHeaderFont = 20;
+        private static int questionFont = 18;
+        private static int maxTextFieldLines = 8;
         private static TMP_FontAsset textFont;
         private static TMP_FontAsset headerFont;
 
         public static TMP_FontAsset TextFont { get => textFont;}
         public static TMP_FontAsset HeaderFont { get => headerFont;}
         public static int QuestionsPerPage { get => questionsPerPage;}
+        public static int QuestionSpacing => questionSpacing;
         public static GameObject Seperator => Resources.Load<GameObject>("QF_Seperator");
+        public static int MaxTextFieldLines => maxTextFieldLines;
 
+        public static int HeaderFontSize { get => questionHeaderFont; }
+        public static int QuestionFontSize { get => questionFont; }
 
         [MenuItem("Tools/QuestForms/Create Questionnaire")]
         public static void AddQuestForm()

@@ -37,6 +37,8 @@ namespace QuestForms
             GameObject question = Instantiate(prefab, transform);
             var ele = question.AddComponent<QF_ScaleQuestion>();
 
+            ele.Mandatory = q.mandatory;
+            Mandatory |= q.mandatory;
             ele.QuestionText.text = q.question;
             ele.AddToggles(choices);
             questions.Add(ele);
@@ -69,11 +71,11 @@ namespace QuestForms
 
         public override bool Valid()
         {
-            bool valid = false;
+            bool valid = true;
 
             foreach(var question in questions) 
             {
-                valid |= question.Valid();
+                valid &= question.Valid();
             }
 
             return valid;

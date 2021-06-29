@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 
 namespace QuestForms
 {
@@ -38,10 +39,44 @@ namespace QuestForms
 
         public void NextPage() 
         {
+            QF_QuestionGroup[] groups = pagesInstance[pageDisplayIndex].GetComponentsInChildren<QF_QuestionGroup>();
+
+            List<int> invalid = new List<int>();
+            for (int i = 0; i < groups.Length; i++)
+            {
+                if (!groups[i].Valid()) 
+                {
+                    invalid.Add(i + 1);
+                }
+            }
+
+            if (invalid.Count > 0) 
+            {
+                StringBuilder message = new StringBuilder("Questões Inválidas. Completa as seguintes questões para prosseguir: ");
+
+                for (int i = 0; i < invalid.Count; i++)
+                {
+                    if (i == invalid.Count - 1) 
+                    {
+                        message.Append($" {invalid[i]}");
+                    }
+                    else 
+                    {
+                        message.Append($" {invalid[i]},");
+                    }
+
+                }
+                pagesInstance[pageDisplayIndex].PageMessage(message.ToString());
+                return;
+            }
+            else 
+            {
+                pagesInstance[pageDisplayIndex].PageMessage("");
+            }
+
             SetPage(pageDisplayIndex, false);
             pageDisplayIndex = Mathf.Clamp((pageDisplayIndex + 1), 0, Pages.Count - 1);
             SetPage(pageDisplayIndex, true);
-            Debug.Log("Next Questionnaire Page");
         }
 
         public void PreviousPage() 
@@ -49,7 +84,6 @@ namespace QuestForms
             SetPage(pageDisplayIndex, false);
             pageDisplayIndex = Mathf.Clamp((pageDisplayIndex - 1), 0, Pages.Count - 1);
             SetPage(pageDisplayIndex, true);
-            Debug.Log("Previous Questionnaire Page");
         }
 
         public void SetPage(QF_Page page, bool state) 
