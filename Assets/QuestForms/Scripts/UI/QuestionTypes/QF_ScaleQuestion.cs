@@ -52,6 +52,11 @@ namespace QuestForms
                 t.isOn = false;
             }
         }
+        
+        private void Start() 
+        {
+            Answer = -1;
+        }
 
         /// <summary>
         /// Toggle callback

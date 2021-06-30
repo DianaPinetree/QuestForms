@@ -182,7 +182,7 @@ namespace QuestForms
 
             if (!string.IsNullOrEmpty(page.instructions)) 
             {
-                ContentText(content, "Instruções: ", page.instructions);
+                ContentText(content, "Instruï¿½ï¿½es: ", page.instructions);
             }
 
             bool scaleQuestion = false;
@@ -234,6 +234,17 @@ namespace QuestForms
                     textField.Mandatory = q.mandatory;
                     textField.SetCharacterLimits(q.characterMin, q.characterMax);
                     qGroup?.AddElement(field);
+                }
+
+                if (q.type == QuestionType.Option)
+                {
+                    GameObject op = new GameObject("QF_Option");
+                    op.transform.SetParent(content);
+                    op.transform.localScale = Vector3.one;
+                    QF_OptionGroup opgroup = op.AddComponent<QF_OptionGroup>();
+                    // Add question
+                    opgroup.AddQuestion(q);
+                    qGroup?.AddElement(op);
                 }
             }
 

@@ -272,6 +272,22 @@ namespace QuestForms.Internal
                 wordMin.intValue = Mathf.Clamp(wordMin.intValue, 0, 1000);
                 wordMax.intValue = Mathf.Clamp(wordMax.intValue, wordMin.intValue, 3000);
             }
+            else if (type == QuestionType.Option)
+            {
+                SerializedProperty options = q.FindPropertyRelative("options");
+                SerializedProperty layout = q.FindPropertyRelative("optionsLayout");
+
+                BoldBlock("Options", "");
+                EditorGUI.indentLevel++;
+                for (int i = 0; i < options.arraySize; i++)
+                {
+                    var op = options.GetArrayElementAtIndex(i);
+                    EditorGUILayout.LabelField(op.stringValue);
+                }
+                EditorGUI.indentLevel--;
+
+                EditorGUILayout.PropertyField(layout);
+            }
 
             BoldBlock("Question: ", question);
 

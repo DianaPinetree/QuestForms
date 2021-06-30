@@ -33,6 +33,8 @@ MonoBehaviour:
       qType: Scale
       question: Escala 1
       mandatory: 1
+      options: []
+      optionsLayout: 0
       characterMax: 200
       characterMin: 50
     - ID: EVA_02Example
@@ -40,6 +42,8 @@ MonoBehaviour:
       qType: Scale
       question: "O que se est\xE1 a perguntar"
       mandatory: 0
+      options: []
+      optionsLayout: 0
       characterMax: 200
       characterMin: 50
     - ID: EVA_03Example
@@ -47,15 +51,31 @@ MonoBehaviour:
       qType: Scale
       question: "O que se est\xE1 a perguntar"
       mandatory: 0
+      options: []
+      optionsLayout: 0
       characterMax: 200
       characterMin: 50
     - ID: EVA_04Opinion
       containsImage: 0
       qType: TextField
       question: "Como se sentiu durante esta experi\xEAncia?"
+      mandatory: 0
+      options: []
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    - ID: EVA_05Sexo
+      containsImage: 0
+      qType: Option
+      question: "Qual o seu g\xE9nero?"
       mandatory: 1
-      characterMax: 2764
-      characterMin: 677
+      options:
+      - Masculino
+      - Feminino
+      - Outro
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
     randomizeOrder: 0
     scrollQuestions: 0
   - ID: Questionario Parte 2
@@ -71,6 +91,8 @@ MonoBehaviour:
       qType: Scale
       question: "O que se est\xE1 a perguntar"
       mandatory: 1
+      options: []
+      optionsLayout: 0
       characterMax: 200
       characterMin: 50
     - ID: EVA_05Example
@@ -78,6 +100,8 @@ MonoBehaviour:
       qType: Scale
       question: "O que se est\xE1 a perguntar"
       mandatory: 1
+      options: []
+      optionsLayout: 0
       characterMax: 200
       characterMin: 50
     - ID: EVA_06Example
@@ -85,6 +109,8 @@ MonoBehaviour:
       qType: Scale
       question: "O que se est\xE1 a perguntar"
       mandatory: 0
+      options: []
+      optionsLayout: 0
       characterMax: 200
       characterMin: 50
     randomizeOrder: 0
@@ -103,6 +129,8 @@ MonoBehaviour:
       qType: Option
       question: "O que se est\xE1 a perguntar"
       mandatory: 1
+      options: []
+      optionsLayout: 0
       characterMax: 200
       characterMin: 50
     - ID: SRS_02Example
@@ -110,6 +138,8 @@ MonoBehaviour:
       qType: Option
       question: "O que se est\xE1 a perguntar"
       mandatory: 1
+      options: []
+      optionsLayout: 0
       characterMax: 200
       characterMin: 50
     - ID: SRS_03Example
@@ -117,6 +147,8 @@ MonoBehaviour:
       qType: Option
       question: "O que se est\xE1 a perguntar"
       mandatory: 1
+      options: []
+      optionsLayout: 0
       characterMax: 200
       characterMin: 50
     randomizeOrder: 0

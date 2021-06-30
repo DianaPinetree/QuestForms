@@ -14,6 +14,8 @@ namespace QuestForms
         [SerializeField] private int characterMin;
         [SerializeField] private int characterMax;
 
+        public string Answer => inputField.text;
+
         private TMP_InputField inputField;
         private TextMeshProUGUI characterCountField;
         private TextMeshProUGUI minimumCharacterField;

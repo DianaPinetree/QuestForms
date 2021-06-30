@@ -39,6 +39,12 @@ namespace QuestForms
 
             ele.Mandatory = q.mandatory;
             Mandatory |= q.mandatory;
+
+            if (Mandatory)
+            {
+                ele.Mandatory = true;
+            }
+            
             ele.QuestionText.text = q.question;
             ele.AddToggles(choices);
             questions.Add(ele);
@@ -73,7 +79,7 @@ namespace QuestForms
         {
             bool valid = true;
 
-            foreach(var question in questions) 
+            foreach(QF_ScaleQuestion question in questions) 
             {
                 valid &= question.Valid();
             }

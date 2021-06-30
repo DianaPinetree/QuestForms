@@ -74,9 +74,17 @@ namespace QuestForms
         public string qType; // Question type Scale, Option, TextField
         public string question;
         public bool mandatory;
+        public string[] options;
+        public Layout optionsLayout;
         public int characterMax = 200;
         public int characterMin = 50;
         public QuestionType type => (QuestionType)Enum.Parse(typeof(QuestionType), qType);
+    }
+
+    public enum Layout
+    {
+        Vertical,
+        Horizontal
     }
 
     public enum QuestionType

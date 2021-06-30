@@ -36,6 +36,18 @@
                     "ID": "EVA_04Opinion",
                     "qType": "TextField",
                     "question": "Como se sentiu durante esta experiência?",
+                    "mandatory": "False"
+                },
+                {
+                    "ID": "EVA_05Sexo",
+                    "qType": "Option",
+                    "question": "Qual o seu género?",
+                    "options":
+                    [
+                        "Masculino",
+                        "Feminino",
+                        "Outro"
+                    ],
                     "mandatory": "True"
                 }
             ]
