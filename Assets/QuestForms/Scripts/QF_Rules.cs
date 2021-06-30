@@ -5,6 +5,13 @@ using UnityEditor;
 using UnityEngine.UI;
 using TMPro;
 
+
+/*
+NOTES:
+- Gravar apenas para json
+- Shuffle de questões por página
+*/
+
 namespace QuestForms
 {
     /// <summary>
