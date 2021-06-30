@@ -59,7 +59,7 @@ namespace QuestForms
 
             if (invalid.Count > 0) 
             {
-                StringBuilder message = new StringBuilder("Questões Inválidas. Completa as seguintes quest�es para prosseguir: ");
+                StringBuilder message = new StringBuilder("Questões Inválidas. Completa as seguintes questões para prosseguir: ");
 
                 for (int i = 0; i < invalid.Count; i++)
                 {
