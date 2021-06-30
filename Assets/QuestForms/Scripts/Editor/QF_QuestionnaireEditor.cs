@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEditor.AssetImporters;
 using UnityEngine.UIElements;
 using QuestForms;
+using System;
 
 namespace QuestForms.Internal
 {
@@ -55,13 +56,6 @@ namespace QuestForms.Internal
             // Draw Pages foldout
             DrawPagesFoldout();
             serializedObject.ApplyModifiedProperties();
-
-            if (GUI.changed)
-            {
-                EditorUtility.SetDirty(questSO);
-                AssetDatabase.SaveAssets();
-                AssetDatabase.Refresh();
-            }
         }
 
         private void DrawPagesFoldout()
@@ -186,8 +180,8 @@ namespace QuestForms.Internal
             }
             EditorGUI.indentLevel--;
 
-            GUILayout.Label("Page Format", titleLabel);
-            PageFormat(pageProperty);
+            GUILayout.Label("Page Settings", titleLabel);
+            PageSettings(pageProperty);
 
             if (questSO.ContainsImage(page.ID))
             {
@@ -199,7 +193,8 @@ namespace QuestForms.Internal
             // Draw questions and check if there is a scale being used
             GUILayout.Label("Questions", titleLabel);
             // Draw and if there is a scale
-            if (DrawQuestions(page.questions))
+            SerializedProperty questions = pageProperty.FindPropertyRelative("questions");
+            if (DrawQuestions(questions))
             {
                 GUILayout.Label("Scale", titleLabel);
                 // Draw scale
@@ -207,27 +202,32 @@ namespace QuestForms.Internal
             }
         }
 
-        private void PageFormat(SerializedProperty page)
+        private void PageSettings(SerializedProperty page)
         {
             SerializedProperty scrollformat = page.FindPropertyRelative("scrollQuestions");
+            SerializedProperty randomizeOrder = page.FindPropertyRelative("randomizeOrder");
             // Scroll questions bool
 
-            scrollformat.enumValueIndex = (int)(ScrollType)EditorGUILayout.EnumPopup((ScrollType)scrollformat.enumValueIndex);
+            scrollformat.enumValueIndex = (int)(ScrollType)EditorGUILayout.EnumPopup("Page Scroll Type: ",(ScrollType)scrollformat.enumValueIndex);
 
             if ((ScrollType)(scrollformat.enumValueIndex) == ScrollType.SplitToPage)
             {
                 var questions = page.FindPropertyRelative("questions");
                 GUILayout.Label($"Split into: {QF_Rules.QuestionsPerPage / questions.arraySize} page", EditorStyles.boldLabel);
             }
+
+            randomizeOrder.boolValue =  EditorGUILayout.Toggle("Randomize Question Order", randomizeOrder.boolValue);
         }
 
         // Returns if the drawn questions use a Scale or are option based
-        private bool DrawQuestions(Question[] questions)
+        private bool DrawQuestions(SerializedProperty questions)
         {
             bool usesScale = false;
-            foreach (Question q in questions)
+            for (int i = 0; i < questions.arraySize; i++)
             {
-                usesScale |= q.type == QuestionType.Scale;
+                SerializedProperty q = questions.GetArrayElementAtIndex(i);
+                QuestionType type = (QuestionType)Enum.Parse(typeof(QuestionType), q.FindPropertyRelative("qType").stringValue);
+                usesScale |= type == QuestionType.Scale;
                 DrawQuestion(q);
             }
 
@@ -235,10 +235,15 @@ namespace QuestForms.Internal
         }
 
         // Draws a single question
-        private void DrawQuestion(Question q)
+        private void DrawQuestion(SerializedProperty q)
         {
+            bool mandatory = q.FindPropertyRelative("mandatory").boolValue;
+            string id = q.FindPropertyRelative("ID").stringValue;
+            string question = q.FindPropertyRelative("question").stringValue;
+            QuestionType type = (QuestionType)Enum.Parse(typeof(QuestionType), q.FindPropertyRelative("qType").stringValue);
 
-            if (q.mandatory)
+
+            if (mandatory)
             {
                 GUILayout.Space(5);
                 GUIStyle box = new GUIStyle();
@@ -253,14 +258,26 @@ namespace QuestForms.Internal
 
             GUIStyle questionHeader = new GUIStyle(EditorStyles.boldLabel);
             questionHeader.fontSize += 1;
-            GUILayout.Label(q.ID + "  " + (q.mandatory ? "(Mandatory)" : ""), questionHeader);
+            GUILayout.Label(id + "  " + (mandatory ? "(Mandatory)" : ""), questionHeader);
 
-            BoldBlock("Type: ", q.qType);
-            BoldBlock("Question: ", q.question);
+            BoldBlock("Type: ", type.ToString());
 
-            if (questSO.ContainsImage(q.ID))
+            if (type == QuestionType.TextField) 
             {
-                int index = questSO.ImagePair(q.ID);
+                SerializedProperty wordMin = q.FindPropertyRelative("characterMin");
+                SerializedProperty wordMax = q.FindPropertyRelative("characterMax");
+                
+                EditorGUILayout.PropertyField(wordMin);
+                EditorGUILayout.PropertyField(wordMax);
+                wordMin.intValue = Mathf.Clamp(wordMin.intValue, 0, 1000);
+                wordMax.intValue = Mathf.Clamp(wordMax.intValue, wordMin.intValue, 3000);
+            }
+
+            BoldBlock("Question: ", question);
+
+            if (questSO.ContainsImage(id))
+            {
+                int index = questSO.ImagePair(id);
                 DrawImagePreview(imageList.GetArrayElementAtIndex(index));
             }
 

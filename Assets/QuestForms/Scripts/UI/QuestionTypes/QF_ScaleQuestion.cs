@@ -106,6 +106,8 @@ namespace QuestForms
 
         public override bool Valid()
         {
+            if (!Mandatory) return true;
+            
             return Toggles.AnyTogglesOn();
         }
 

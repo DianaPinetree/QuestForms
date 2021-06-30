@@ -62,6 +62,7 @@ namespace QuestForms
         public string instructions;
         public string[] scale;
         public Question[] questions;
+        public bool randomizeOrder;
         public ScrollType scrollQuestions;
     }
 
@@ -73,6 +74,8 @@ namespace QuestForms
         public string qType; // Question type Scale, Option, TextField
         public string question;
         public bool mandatory;
+        public int characterMax = 200;
+        public int characterMin = 50;
         public QuestionType type => (QuestionType)Enum.Parse(typeof(QuestionType), qType);
     }
 

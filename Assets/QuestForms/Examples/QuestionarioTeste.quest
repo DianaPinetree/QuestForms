@@ -17,7 +17,7 @@
                 {
                     "ID": "EVA_01Example",
                     "qType": "Scale",
-                    "question": "O que se está a perguntar",
+                    "question": "Escala 1",
                     "mandatory": "True"
                 },
                 {
@@ -31,6 +31,12 @@
                     "qType": "Scale",
                     "question": "O que se está a perguntar",
                     "mandatory": "False"
+                },
+                {
+                    "ID": "EVA_04Opinion",
+                    "qType": "TextField",
+                    "question": "Como se sentiu durante esta experiência?",
+                    "mandatory": "True"
                 }
             ]
         },

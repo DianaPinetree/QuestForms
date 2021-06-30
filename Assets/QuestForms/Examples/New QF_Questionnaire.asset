@@ -31,19 +31,33 @@ MonoBehaviour:
     - ID: EVA_01Example
       containsImage: 0
       qType: Scale
-      question: "O que se est\xE1 a perguntar"
+      question: Escala 1
       mandatory: 1
+      characterMax: 200
+      characterMin: 50
     - ID: EVA_02Example
       containsImage: 0
       qType: Scale
       question: "O que se est\xE1 a perguntar"
       mandatory: 0
+      characterMax: 200
+      characterMin: 50
     - ID: EVA_03Example
       containsImage: 0
       qType: Scale
       question: "O que se est\xE1 a perguntar"
       mandatory: 0
-    scrollQuestions: 1
+      characterMax: 200
+      characterMin: 50
+    - ID: EVA_04Opinion
+      containsImage: 0
+      qType: TextField
+      question: "Como se sentiu durante esta experi\xEAncia?"
+      mandatory: 1
+      characterMax: 2764
+      characterMin: 677
+    randomizeOrder: 0
+    scrollQuestions: 0
   - ID: Questionario Parte 2
     containsImage: 0
     header: Controlo A
@@ -57,16 +71,23 @@ MonoBehaviour:
       qType: Scale
       question: "O que se est\xE1 a perguntar"
       mandatory: 1
+      characterMax: 200
+      characterMin: 50
     - ID: EVA_05Example
       containsImage: 0
       qType: Scale
       question: "O que se est\xE1 a perguntar"
       mandatory: 1
+      characterMax: 200
+      characterMin: 50
     - ID: EVA_06Example
       containsImage: 0
       qType: Scale
       question: "O que se est\xE1 a perguntar"
       mandatory: 0
+      characterMax: 200
+      characterMin: 50
+    randomizeOrder: 0
     scrollQuestions: 0
   - ID: Questionario Parte 3
     containsImage: 1
@@ -82,24 +103,31 @@ MonoBehaviour:
       qType: Option
       question: "O que se est\xE1 a perguntar"
       mandatory: 1
+      characterMax: 200
+      characterMin: 50
     - ID: SRS_02Example
       containsImage: 1
       qType: Option
       question: "O que se est\xE1 a perguntar"
       mandatory: 1
+      characterMax: 200
+      characterMin: 50
     - ID: SRS_03Example
       containsImage: 1
       qType: Option
       question: "O que se est\xE1 a perguntar"
       mandatory: 1
+      characterMax: 200
+      characterMin: 50
+    randomizeOrder: 0
     scrollQuestions: 0
   numberOfImages: 4
   images:
   - id: Questionario Parte 3
-    image: {fileID: 21300000, guid: 49b02b3e017801b44b8e3adff6631894, type: 3}
+    image: {fileID: 0}
     position: 0
   - id: SRS_01Example
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: 49b02b3e017801b44b8e3adff6631894, type: 3}
     position: 0
   - id: SRS_02Example
     image: {fileID: 0}
