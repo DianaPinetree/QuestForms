@@ -76,7 +76,7 @@ MonoBehaviour:
       optionsLayout: 0
       characterMax: 200
       characterMin: 50
-    randomizeOrder: 0
+    randomizeOrder: 1
     scrollQuestions: 0
   - ID: Questionario Parte 2
     containsImage: 0

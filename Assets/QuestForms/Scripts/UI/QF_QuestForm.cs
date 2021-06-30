@@ -35,6 +35,13 @@ namespace QuestForms
         private void Start()
         {
             SetPage(pageDisplayIndex, true);
+            foreach(QF_Page page in pagesInstance)
+            {
+                if (page.RandomizeContent)
+                {
+                    page.ShuffleContent();
+                }
+            }
         }
 
         public void NextPage() 
@@ -52,7 +59,7 @@ namespace QuestForms
 
             if (invalid.Count > 0) 
             {
-                StringBuilder message = new StringBuilder("Questões Inválidas. Completa as seguintes questões para prosseguir: ");
+                StringBuilder message = new StringBuilder("QuestÃµes InvÃ¡lidas. Completa as seguintes questï¿½es para prosseguir: ");
 
                 for (int i = 0; i < invalid.Count; i++)
                 {
@@ -120,9 +127,6 @@ namespace QuestForms
 
             // Setup page structure
             SetupStructure();
-
-            // Create questions
-            CreateQuestions();
         }
 
         public void CleanUp()
@@ -157,11 +161,6 @@ namespace QuestForms
 
                 if (i != 0) SetPage(p, false);
             }
-        }
-
-        public void CreateQuestions()
-        {
-
         }
 
         public void PrintData()

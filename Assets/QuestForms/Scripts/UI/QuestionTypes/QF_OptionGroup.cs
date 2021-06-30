@@ -69,6 +69,7 @@ namespace QuestForms
             if (q.options.Length <= 0)
             {
                 Debug.LogError($"Question {q.ID} could not be generated, options are empty");
+                enabled = false;
                 return;
             }
 
@@ -111,6 +112,11 @@ namespace QuestForms
             layout.childForceExpandWidth = false;
 
             layout.spacing = QF_Rules.OptionsSpacing;
+            Canvas.ForceUpdateCanvases();
+            layout.SetLayoutVertical();
+            layout.SetLayoutHorizontal();
+
+            AlignLayouts();
         }
 
         private void OnValidate()

@@ -11,17 +11,19 @@ namespace QuestForms
         private static GameObject contentWideText;
         [SerializeField] private int pageIndex;
         [SerializeField] private QF_QuestForm manager;
-
-        [SerializeField, HideInInspector]private List<RectTransform> content;
+        [SerializeField] private List<QF_QuestionGroup> questionGroups;
+        [SerializeField, HideInInspector] bool shuffleContents;
+        [SerializeField, HideInInspector] private List<RectTransform> content;
         private int contentDisplayIndex;
+        public bool RandomizeContent => shuffleContents;
 
         // UI elements
-        [SerializeField, HideInInspector]private Button back, clear, next;
-        [SerializeField, HideInInspector]private Button pageNext, pagePrevious;
-        [SerializeField, HideInInspector]private TextMeshProUGUI pageCount;
-        [SerializeField, HideInInspector]private TextMeshProUGUI header;
-        [SerializeField, HideInInspector]private TextMeshProUGUI pageMessage;
-        [SerializeField, HideInInspector]private RectTransform contentTransform;
+        [SerializeField, HideInInspector] private Button back, clear, next;
+        [SerializeField, HideInInspector] private Button pageNext, pagePrevious;
+        [SerializeField, HideInInspector] private TextMeshProUGUI pageCount;
+        [SerializeField, HideInInspector] private TextMeshProUGUI header;
+        [SerializeField, HideInInspector] private TextMeshProUGUI pageMessage;
+        [SerializeField, HideInInspector] private RectTransform contentTransform;
 
         public int PageNumber => pageIndex;
 
@@ -32,10 +34,10 @@ namespace QuestForms
             SetupButtons();
         }
 
-        public void ClearAnswers() 
+        public void ClearAnswers()
         {
             var elements = GetComponentsInChildren<QF_PageElement>();
-            foreach(var ele in elements) 
+            foreach (var ele in elements)
             {
                 ele.Clear();
             }
@@ -43,17 +45,17 @@ namespace QuestForms
             Debug.Log("Cleared Answers");
         }
 
-        public void NextContentPage() 
+        public void NextContentPage()
         {
             Debug.Log("Next content Page");
         }
 
-        public void PreviousContentPage() 
+        public void PreviousContentPage()
         {
             Debug.Log("Previous content page");
         }
 
-        private void SetupButtons() 
+        private void SetupButtons()
         {
             Page page = manager.QuestSource.pages[pageIndex];
             int count = (QF_Rules.QuestionsPerPage / page.questions.Length);
@@ -70,7 +72,7 @@ namespace QuestForms
             }
         }
 
-        public void PageMessage(string message) 
+        public void PageMessage(string message)
         {
             pageMessage.text = message;
         }
@@ -94,7 +96,7 @@ namespace QuestForms
         /// <summary>
         /// Big function to retrieve references from UI per page
         /// </summary>
-        public void GetReferences(Page page) 
+        public void GetReferences(Page page)
         {
             // Bottom form control
             back = transform.Find("QuestionnaireControl/Back").GetComponent<Button>();
@@ -127,7 +129,7 @@ namespace QuestForms
         /// <param name="breakParts">Adds a line break in between the header and the body</param>
         public static GameObject ContentText(Transform content, string header = "", string body = "", bool breakParts = false)
         {
-            if (contentWideText == null) 
+            if (contentWideText == null)
             {
                 contentWideText = Resources.Load<GameObject>("QF_PageLengthText");
             }
@@ -141,15 +143,27 @@ namespace QuestForms
             return o;
         }
 
+        public static string ContentText(string header = "", string body = "", bool breakParts = false)
+        {
+            string text;
+            text = $"<size={QF_Rules.HeaderFontSize}><b>{header}</b></size>";
+            if (breakParts) text += "\n";
+            text += $"<size={QF_Rules.QuestionFontSize}>{body}</size>";
+
+            return text;
+        }
+
         /// <summary>
         /// Creates a page, this is where most of the UI generation resides
         /// </summary>
         /// <param name="page"> Page data to generate</param>
-        public void SetupPage(Page page) 
+        public void SetupPage(Page page)
         {
             RectTransform content;
             GameObject scaleElement = Resources.Load<GameObject>("QF_ScaleElement");
 
+            questionGroups = new List<QF_QuestionGroup>();
+            shuffleContents = page.randomizeOrder;
             // Page control
             header.text = page.header;
             pageMessage.text = string.Empty;
@@ -166,7 +180,7 @@ namespace QuestForms
                 fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
                 fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             }
-            else 
+            else
             {
                 content = contentTransform;
             }
@@ -180,9 +194,9 @@ namespace QuestForms
             group.spacing = QF_Rules.QuestionSpacing;
             group.childForceExpandHeight = false;
 
-            if (!string.IsNullOrEmpty(page.instructions)) 
+            if (!string.IsNullOrEmpty(page.instructions))
             {
-                ContentText(content, "Instru��es: ", page.instructions);
+                ContentText(content, "Instruções: ", page.instructions);
             }
 
             bool scaleQuestion = false;
@@ -191,13 +205,11 @@ namespace QuestForms
             GameObject g = Resources.Load<GameObject>("QF_QuestionGroup");
             QF_QuestionGroup qGroup = null;
 
-            List<Question> pageQuestions = new List<Question>(page.questions);
-            
             for (int i = 0; i < page.questions.Length; i++)
             {
                 Question q = page.questions[i];
 
-                if (q.type == QuestionType.Scale) 
+                if (q.type == QuestionType.Scale)
                 {
                     if (!scaleQuestion)
                     {
@@ -218,7 +230,7 @@ namespace QuestForms
                     if (scaleGroup != null) scaleGroup.AddQuestion(q);
                     scaleQuestion = true;
                 }
-                else 
+                else
                 {
                     questionIndex++;
                     qGroup = Instantiate(g, content).GetComponent<QF_QuestionGroup>();
@@ -226,7 +238,7 @@ namespace QuestForms
                     qGroup.AddElement(questionText);
                 }
 
-                if (q.type == QuestionType.TextField) 
+                if (q.type == QuestionType.TextField)
                 {
                     GameObject field = Resources.Load<GameObject>("QF_TextField");
                     field = Instantiate(field, content);
@@ -246,15 +258,26 @@ namespace QuestForms
                     opgroup.AddQuestion(q);
                     qGroup?.AddElement(op);
                 }
+
+                questionGroups.Add(qGroup);
             }
 
         }
 
-        /// <summary>
-        /// Shuffle a list
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="list"></param>
+        public void ShuffleContent()
+        {
+            Shuffle(questionGroups);
+
+            for (int i = 0; i < questionGroups.Count; i++)
+            {
+                questionGroups[i].transform.SetSiblingIndex(i + 1);
+            }
+            for (int i = 0; i < questionGroups.Count; i++)
+            {
+                questionGroups[i].SetQuestionIndex();
+            }
+        }
+
         public static void Shuffle<T>(IList<T> list)
         {
             System.Random rng = new System.Random();
