@@ -188,4 +188,4 @@ MonoBehaviour:
   - id: EVA_05Imagem
     image: {fileID: 21300000, guid: 49b02b3e017801b44b8e3adff6631894, type: 3}
     position: 0
-    alignment: 4
+    alignment: 3

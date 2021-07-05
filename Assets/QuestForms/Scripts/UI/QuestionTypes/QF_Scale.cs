@@ -26,7 +26,7 @@ namespace QuestForms
         /// Adds a question to this group scale question
         /// </summary>
         /// <param name="q">Question to add</param>
-        public void AddQuestion(Question q) 
+        public QF_ScaleQuestion AddQuestion(Question q) 
         {
             if (choices == -1)
             {
@@ -49,12 +49,14 @@ namespace QuestForms
             ele.AddToggles(choices);
             questions.Add(ele);
             Instantiate(QF_Rules.Seperator, transform);
+
+            return ele;
         }
 
         /// <summary>
         /// Sets the scale for this scale question
         /// </summary>
-        /// <param name="scale">Scale devided by string</param>
+        /// <param name="scale">Scale divided by string</param>
         public void SetScale(string[] scale) 
         {
             if (scale == null) return;

@@ -6,11 +6,12 @@ using TMPro;
 
 namespace QuestForms
 {
-    public class QF_OptionGroup : QF_PageElement
+    public class QF_OptionGroup : QF_PageElement, IAnswerElement
     {
         [SerializeField] private List<QF_OptionElement> options = new List<QF_OptionElement>();
         private ToggleGroup toggles;
-        public int Answer { get; private set; }
+        public object Answer { get; private set; }
+        [field: SerializeField]public string ID {get; set;}
 
         private void Awake()
         {
@@ -78,8 +79,6 @@ namespace QuestForms
             toggles = gameObject.AddComponent<ToggleGroup>();
             toggles.allowSwitchOff = true;
 
-
-
             // Load gameobject for each option
             GameObject prefab = Resources.Load<GameObject>("QF_OptionElement");
 
@@ -96,8 +95,6 @@ namespace QuestForms
             if (q.optionsLayout == Layout.Vertical)
             {
                 layout = gameObject.AddComponent<VerticalLayoutGroup>();
-
-
             }
             else
             {

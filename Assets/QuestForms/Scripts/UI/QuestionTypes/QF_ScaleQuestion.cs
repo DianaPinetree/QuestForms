@@ -8,14 +8,14 @@ namespace QuestForms
     /// <summary>
     /// A unique line in a scale group questin
     /// </summary>
-    public class QF_ScaleQuestion : QF_PageElement
+    public class QF_ScaleQuestion : QF_PageElement, IAnswerElement
     {
         private TextMeshProUGUI questionText;
         private ToggleGroup group;
         private QF_Scale scale;
         [SerializeField] private List<Toggle> toggles;
-        public int Answer { get; private set; }
-
+        public object Answer { get; private set; }
+        [field: SerializeField]public string ID {get; set;}
         public ToggleGroup Toggles
         {
             get

@@ -7,14 +7,15 @@ using UnityEngine.UI;
 namespace QuestForms
 {
 
-    public class QF_TextField : QF_PageElement
+    public class QF_TextField : QF_PageElement, IAnswerElement
     {
         [SerializeField] private bool showCurrentCharacter = true;
         [SerializeField] private int baseLines = 5;
         [SerializeField] private int characterMin;
         [SerializeField] private int characterMax;
 
-        public string Answer => inputField.text;
+        public object Answer => inputField.text;
+        [field: SerializeField] public string ID {get; set;}
 
         private TMP_InputField inputField;
         private TextMeshProUGUI characterCountField;

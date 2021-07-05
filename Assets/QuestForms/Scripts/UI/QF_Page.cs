@@ -222,12 +222,17 @@ namespace QuestForms
                         scale = Instantiate(scale, content);
                         scaleGroup = scale.AddComponent<QF_Scale>();
                         scaleGroup.SetScale(page.scale);
+
                         qGroup = Instantiate(g, content).GetComponent<QF_QuestionGroup>();
                         qGroup.AddElement(questionText);
                         qGroup.AddElement(scale);
                     }
 
-                    if (scaleGroup != null) scaleGroup.AddQuestion(q);
+                    if (scaleGroup != null)
+                    {
+                        QF_ScaleQuestion qF_ScaleQuestion = scaleGroup.AddQuestion(q);
+                        qF_ScaleQuestion.ID = q.ID;
+                    } 
                     scaleQuestion = true;
                 }
                 else
@@ -246,6 +251,8 @@ namespace QuestForms
                     textField.Mandatory = q.mandatory;
                     textField.SetCharacterLimits(q.characterMin, q.characterMax);
                     qGroup?.AddElement(field);
+
+                    textField.ID = q.ID;
                 }
 
                 if (q.type == QuestionType.Option)
@@ -254,8 +261,11 @@ namespace QuestForms
                     op.transform.SetParent(content);
                     op.transform.localScale = Vector3.one;
                     QF_OptionGroup opgroup = op.AddComponent<QF_OptionGroup>();
+                    
                     // Add question
                     opgroup.AddQuestion(q);
+
+                    opgroup.ID = q.ID;
                     qGroup?.AddElement(op);
                 }
 

@@ -6,11 +6,19 @@ using TMPro;
 
 namespace QuestForms
 {
+    /// <summary>
+    /// Helper class that combines given questions and headers and displays them
+    /// nicely aligned in the UI
+    /// 
+    /// QuestionGroup enabled the possibility of reordering groups, randomizing
+    /// the question order without changing the order of the questions in the
+    /// exported answers file
+    /// </summary>
     public class QF_QuestionGroup : QF_PageElement
     {
         [SerializeField] private List<QF_PageElement> elements = new List<QF_PageElement>();
         [SerializeField] private TextMeshProUGUI headerText;
-        private Image backdrop;
+        public Image backdrop;
 
         private void Awake()
         {
@@ -76,8 +84,6 @@ namespace QuestForms
             backdrop = GetComponent<Image>();
             backdrop.enabled = false;
         }
-
-       
 #endif
     }
 }
