@@ -130,9 +130,15 @@ namespace QuestForms.Internal
         {
             GUILayout.Label("Image", titleLabel);
             SerializedProperty anchor = pair.FindPropertyRelative("position");
+            SerializedProperty alignment = pair.FindPropertyRelative("alignment");
             SerializedProperty image = pair.FindPropertyRelative("image");
 
-            anchor.enumValueIndex = (int)(ImageAnchor)EditorGUILayout.EnumPopup((ImageAnchor)anchor.enumValueIndex);
+            anchor.enumValueIndex = (int)(ImageAnchor)EditorGUILayout.EnumPopup
+                ("Image Position: ", (ImageAnchor)anchor.enumValueIndex);
+            
+            alignment.enumValueIndex = (int)(TextAnchor)EditorGUILayout.EnumPopup
+                ("Image Alignment: ", (TextAnchor)alignment.enumValueIndex);
+            
             image.objectReferenceValue = (Sprite)EditorGUILayout.ObjectField(image.objectReferenceValue, typeof(Sprite), false);
 
 
@@ -140,10 +146,6 @@ namespace QuestForms.Internal
             {
                 Texture tex = (image.objectReferenceValue as Sprite).texture;
                 Rect imageRect = (image.objectReferenceValue as Sprite).rect;
-                if ((ImageAnchor)anchor.enumValueIndex == ImageAnchor.Right)
-                {
-                    GUILayout.FlexibleSpace();
-                }
 
                 float ratio = imageRect.height / imageRect.width;
                 Rect r = EditorGUILayout.GetControlRect(GUILayout.MaxHeight(IMAGE_PREVIEW_SIZE), GUILayout.MaxWidth(IMAGE_PREVIEW_SIZE / ratio));
@@ -277,6 +279,8 @@ namespace QuestForms.Internal
                 SerializedProperty options = q.FindPropertyRelative("options");
                 SerializedProperty layout = q.FindPropertyRelative("optionsLayout");
 
+                EditorGUILayout.PropertyField(layout);
+
                 BoldBlock("Options", "");
                 EditorGUI.indentLevel++;
                 for (int i = 0; i < options.arraySize; i++)
@@ -286,7 +290,7 @@ namespace QuestForms.Internal
                 }
                 EditorGUI.indentLevel--;
 
-                EditorGUILayout.PropertyField(layout);
+
             }
 
             BoldBlock("Question: ", question);

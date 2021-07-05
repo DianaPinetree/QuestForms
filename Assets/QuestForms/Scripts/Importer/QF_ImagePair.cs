@@ -11,6 +11,7 @@ namespace QuestForms
         public string id;
         public Sprite image;
         public ImageAnchor position;
+        public TextAnchor alignment;
 
         public QF_ImagePair(string id) 
         {
@@ -33,10 +34,8 @@ namespace QuestForms
 
     public enum ImageAnchor
     {
-        Before,
-        After,
-        Left,
-        Right,
-        Center
+        Before = 0,
+        After = 1,
+        
     }
 }

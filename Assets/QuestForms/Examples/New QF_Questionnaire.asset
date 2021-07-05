@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: New QF_Questionnaire
   m_EditorClassIdentifier: 
   pages:
-  - ID: Questionario Parte 1
+  - ID: "Question\xE1rio Parte 1"
     containsImage: 0
     header: Controlo A
     instructions: "Esta linha explica o exerc\xEDcio/quest\xE3o a realizar nesta
-      pagina do question\xE1rio, pode ter multiplas linhas de texto e pode tamb\xE9m
+      pagina do question\xE1rio, pode ter m\xFAltiplas linhas de texto e pode tamb\xE9m
       ser n\xE3o existente caso a p\xE1gina seja sequ\xEAncia de uma anterior com
       instru\xE7\xF5es. As instru\xE7\xF5es n\xE3o contam para o n\xFAmero de elementos
       na p\xE1gina, sendo poss\xEDvel haver instru\xE7\xF5es mais as 6 perguntas
@@ -76,7 +76,21 @@ MonoBehaviour:
       optionsLayout: 0
       characterMax: 200
       characterMin: 50
-    randomizeOrder: 1
+    - ID: EVA_05Imagem
+      containsImage: 1
+      qType: Option
+      question: "Sel\xE9cione a op\xE7\xE3o que mais se adequa a como se sente de
+        momento."
+      mandatory: 1
+      options:
+      - 1
+      - 2
+      - 3
+      - 4
+      optionsLayout: 1
+      characterMax: 200
+      characterMin: 50
+    randomizeOrder: 0
     scrollQuestions: 0
   - ID: Questionario Parte 2
     containsImage: 0
@@ -119,7 +133,7 @@ MonoBehaviour:
     containsImage: 1
     header: Controlo B
     instructions: "Esta linha explica o exerc\xEDcio/quest\xE3o a realizar nesta
-      pagina do question\xE1rio, pode ter multiplas linhas de texto e pode tamb\xE9m
+      pagina do question\xE1rio, pode ter m\xFAltiplas linhas de texto e pode tamb\xE9m
       ser n\xE3o existente caso a p\xE1gina seja sequ\xEAncia de uma anterior com
       instru\xE7\xF5es"
     scale: []
@@ -153,17 +167,25 @@ MonoBehaviour:
       characterMin: 50
     randomizeOrder: 0
     scrollQuestions: 0
-  numberOfImages: 4
+  numberOfImages: 5
   images:
   - id: Questionario Parte 3
     image: {fileID: 0}
     position: 0
+    alignment: 0
   - id: SRS_01Example
     image: {fileID: 21300000, guid: 49b02b3e017801b44b8e3adff6631894, type: 3}
     position: 0
+    alignment: 0
   - id: SRS_02Example
     image: {fileID: 0}
     position: 0
+    alignment: 0
   - id: SRS_03Example
     image: {fileID: 0}
     position: 0
+    alignment: 0
+  - id: EVA_05Imagem
+    image: {fileID: 21300000, guid: 49b02b3e017801b44b8e3adff6631894, type: 3}
+    position: 0
+    alignment: 4

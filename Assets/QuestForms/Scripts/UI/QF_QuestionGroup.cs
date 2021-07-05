@@ -36,6 +36,11 @@ namespace QuestForms
                 headerText = t;
             }
         }
+        public void AddElement(GameObject obj, int childIndex)
+        {
+            AddElement(obj);
+            obj.transform.SetSiblingIndex(childIndex);
+        }
 
         public void SetQuestionIndex()
         {

@@ -25,6 +25,8 @@ namespace QuestForms
             return images.FindIndex((x) => x.id == id);
         }
 
+        public QF_ImagePair GetImagePair(string id) => images[ImagePair(id)];
+
         public void CreateImages()
         {
             // Create images

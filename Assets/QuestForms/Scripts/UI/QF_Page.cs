@@ -142,7 +142,6 @@ namespace QuestForms
 
             return o;
         }
-
         public static string ContentText(string header = "", string body = "", bool breakParts = false)
         {
             string text;
@@ -203,6 +202,7 @@ namespace QuestForms
             QF_Scale scaleGroup = null;
             int questionIndex = 0;
             GameObject g = Resources.Load<GameObject>("QF_QuestionGroup");
+            GameObject imagePrefab = Resources.Load<GameObject>("QF_Image");
             QF_QuestionGroup qGroup = null;
 
             for (int i = 0; i < page.questions.Length; i++)
@@ -257,6 +257,27 @@ namespace QuestForms
                     // Add question
                     opgroup.AddQuestion(q);
                     qGroup?.AddElement(op);
+                }
+
+                if (q.containsImage)
+                {
+                    QF_ImagePair imgInfo = manager.QuestSource.GetImagePair(q.ID);
+                    if(imgInfo.image != null)
+                    {
+                        GameObject questionnaireImage = Instantiate(imagePrefab, content);
+                        var layout = questionnaireImage.GetComponent<LayoutGroup>();
+                        var img = questionnaireImage.GetComponentInChildren<Image>();
+                        
+                        // Set image layout position
+                        layout.childAlignment = imgInfo.alignment;
+
+                        // Set Image ratio
+                        float ratio = img.sprite.rect.height / img.sprite.rect.width;
+                        img.sprite = imgInfo.image;
+                        img.rectTransform.sizeDelta = new Vector2(300 / ratio, 300);
+
+                        qGroup?.AddElement(questionnaireImage, (int)imgInfo.position + 1);
+                    }
                 }
 
                 questionGroups.Add(qGroup);
