@@ -11,6 +11,9 @@ namespace QuestForms.Internal
     {
         // Variables to change
         private SerializedProperty questAsset;
+        private SerializedProperty exportType;
+        private SerializedProperty savePath;
+        private SerializedProperty fileName;
         private QF_QuestForm formMono;
         
         // Style stuff
@@ -23,6 +26,10 @@ namespace QuestForms.Internal
         {
             questAsset = serializedObject.FindProperty("questionnaire");
             formMono = target as QF_QuestForm;
+
+            exportType = serializedObject.FindProperty("exportType");
+            savePath = serializedObject.FindProperty("savePath");
+            fileName = serializedObject.FindProperty("fileName");
 
             Color c = new Color(74f / 255f, 74f / 255f, 74f / 255f);
             headerBackgroundTex = QF_QuestionnaireEditor.MakeTex(Screen.width, 1, c);
@@ -55,7 +62,37 @@ namespace QuestForms.Internal
             // Dropdown with pageSelection
             Navigation();
 
+            EditorGUILayout.LabelField("Export Settings", titleLabel);
+            // Exporter
+            ExportSelection();
+
             serializedObject.ApplyModifiedProperties();
+        }
+
+        private void ExportSelection()
+        {
+
+            EditorGUILayout.PropertyField(exportType);
+
+            EditorGUILayout.PropertyField(fileName);
+
+            GUILayout.BeginHorizontal();
+
+            EditorGUILayout.PropertyField(savePath);
+
+            if (GUILayout.Button("Select Path", GUILayout.MaxWidth(100)))
+            {
+                string p = EditorUtility.OpenFolderPanel(
+                    "Save Questionnaire Data Folder", "", ""
+                );
+
+                if (!string.IsNullOrEmpty(p))
+                {
+                    savePath.stringValue = p;
+                }
+            }
+
+            GUILayout.EndHorizontal();
         }
 
         private void Navigation()

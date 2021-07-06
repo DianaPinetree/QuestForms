@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
+using System;
+using System.IO;
 
 namespace QuestForms
 {
@@ -18,6 +20,9 @@ namespace QuestForms
         /// Page list of gameobjects pages
         /// </summary>
         [SerializeField] private List<QF_Page> pagesInstance;
+        [SerializeField, ExporterList] private string exportType;
+        [SerializeField] private string fileName = "MyQuestionnaireData";
+        [SerializeField] private string savePath;
         public List<IAnswerElement> questions = new List<IAnswerElement>();
 
         public QF_Questionnaire QuestSource => questionnaire;
@@ -92,6 +97,9 @@ namespace QuestForms
             return true;
         }
 
+        /// <summary>
+        /// Moves to the next Questionnaire page, called in ui button
+        /// </summary>
         public void NextPage()
         {
             if (!CheckForInvalidPage())
@@ -104,7 +112,6 @@ namespace QuestForms
                 SetPage(pageDisplayIndex, false);
 
                 transform.GetChild(transform.childCount - 1).gameObject.SetActive(true);
-                ExportAnswers();
             }
             else
             {
@@ -114,6 +121,9 @@ namespace QuestForms
             }
         }
 
+        /// <summary>
+        /// Moves to the previous Questionnaire page, called in UI button
+        /// </summary>
         public void PreviousPage()
         {
             SetPage(pageDisplayIndex, false);
@@ -121,6 +131,9 @@ namespace QuestForms
             SetPage(pageDisplayIndex, true);
         }
 
+        /// <summary>
+        /// Selects last page
+        /// </summary>
         public void LastPage()
         {
             SetPage(pageDisplayIndex, false);
@@ -128,6 +141,11 @@ namespace QuestForms
             SetPage(pageDisplayIndex, true);
         }
 
+        /// <summary>
+        /// Sets a given page to be active or innactive
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="state"></param>
         public void SetPage(QF_Page page, bool state)
         {
             CanvasGroup c = page.GetComponent<CanvasGroup>();
@@ -149,25 +167,37 @@ namespace QuestForms
 
         public void ExportAnswers()
         {
-            System.Text.StringBuilder stringBuilder = new StringBuilder();
+            Type t = System.Type.GetType(exportType);
+            IQuestionnaireExporter exporter =  (IQuestionnaireExporter)Activator.CreateInstance(t);
 
-            foreach(IAnswerElement e in questions)
+            string data = exporter.FormatData(questions);
+
+            if (!string.IsNullOrEmpty(savePath))
             {
-                stringBuilder.Append(e.ID + ",");
+                SaveDataToFile(data, fileName, exporter.Extension);
+            }
+            onExport?.Invoke(data);
+        }
+
+        private void SaveDataToFile(string data, string fileName, string extension)
+        {
+            string filePath = savePath + "/" + fileName + extension;
+
+            int count = 0;
+            while(File.Exists(filePath))
+            {
+                count++;
+                filePath = savePath + "/" + fileName + count.ToString() + extension;
             }
 
-            stringBuilder.Append('\n');
-
-            foreach(IAnswerElement e in questions)
+            using (StreamWriter writer = File.CreateText(filePath))
             {
-                stringBuilder.Append(e.Answer);
-                stringBuilder.Append(",");
+                writer.WriteLine(data);
             }
-
-            Debug.Log(stringBuilder.ToString());
         }
 
         public static event System.Action onQuestionnaireEnd;
+        public static event System.Action<string> onExport;
 
         // Dont mess with the UI generation, might break if you don't know what you're doing
         #region Editor UI Generation
