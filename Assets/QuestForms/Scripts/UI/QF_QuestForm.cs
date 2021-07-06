@@ -12,6 +12,7 @@ namespace QuestForms
     /// </summary>
     public class QF_QuestForm : MonoBehaviour
     {
+        [SerializeField] private QF_Questionnaire[] form;
         /// <summary>
         /// Currently loaded questionnaire
         /// </summary>
@@ -23,6 +24,7 @@ namespace QuestForms
         [SerializeField, ExporterList] private string exportType;
         [SerializeField] private string fileName = "MyQuestionnaireData";
         [SerializeField] private string savePath;
+
         public List<IAnswerElement> questions = new List<IAnswerElement>();
 
         public QF_Questionnaire QuestSource => questionnaire;
@@ -158,6 +160,7 @@ namespace QuestForms
         public void SetPage(int page, bool state)
         {
             SetPage(pagesInstance[page], state);
+        
         }
 
         public void OnQuestionnaireEnd()
@@ -202,6 +205,25 @@ namespace QuestForms
         // Dont mess with the UI generation, might break if you don't know what you're doing
         #region Editor UI Generation
 #if UNITY_EDITOR
+
+        private void OnValidate() 
+        {
+            List<Page> pages = new List<Page>();
+            List<QF_ImagePair> images = new List<QF_ImagePair>();
+
+            for (int i = 0; i < form.Length; i++)
+            {
+                if (form[i] == null) continue;
+                pages.AddRange(form[i].pages);
+                images.AddRange(form[i].images);
+            }
+
+            questionnaire = ScriptableObject.CreateInstance<QF_Questionnaire>();
+
+            questionnaire.images = images;
+            questionnaire.pages = pages.ToArray();
+        }
+
         public void SetQuestionnaire(QF_Questionnaire q, bool load)
         {
             if (q == null) return;

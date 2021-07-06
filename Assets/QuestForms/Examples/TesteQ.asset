@@ -1,0 +1,191 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2721679ec6d204bb33abb523048b4b, type: 3}
+  m_Name: TesteQ
+  m_EditorClassIdentifier: 
+  pages:
+  - ID: "Question\xE1rio Parte 1"
+    containsImage: 0
+    header: Controlo A
+    instructions: "Esta linha explica o exerc\xEDcio/quest\xE3o a realizar nesta
+      pagina do question\xE1rio, pode ter m\xFAltiplas linhas de texto e pode tamb\xE9m
+      ser n\xE3o existente caso a p\xE1gina seja sequ\xEAncia de uma anterior com
+      instru\xE7\xF5es. As instru\xE7\xF5es n\xE3o contam para o n\xFAmero de elementos
+      na p\xE1gina, sendo poss\xEDvel haver instru\xE7\xF5es mais as 6 perguntas
+      m\xE1ximas da p\xE1gina"
+    scale:
+    - Nada ou muito ligeiramente
+    - Ligeiramente
+    - Moderadamente
+    - Bastante
+    questions:
+    - ID: EVA_01Example
+      containsImage: 0
+      qType: Scale
+      question: Escala 1
+      mandatory: 1
+      options: []
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    - ID: EVA_02Example
+      containsImage: 0
+      qType: Scale
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 0
+      options: []
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    - ID: EVA_03Example
+      containsImage: 0
+      qType: Scale
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 0
+      options: []
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    - ID: EVA_04Opinion
+      containsImage: 0
+      qType: TextField
+      question: "Como se sentiu durante esta experi\xEAncia?"
+      mandatory: 0
+      options: []
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    - ID: EVA_05Sexo
+      containsImage: 0
+      qType: Option
+      question: "Qual o seu g\xE9nero?"
+      mandatory: 1
+      options:
+      - Masculino
+      - Feminino
+      - Outro
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    - ID: EVA_05Imagem
+      containsImage: 1
+      qType: Option
+      question: "Sel\xE9cione a op\xE7\xE3o que mais se adequa a como se sente de
+        momento."
+      mandatory: 1
+      options:
+      - 1
+      - 2
+      - 3
+      - 4
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    randomizeOrder: 0
+    scrollQuestions: 0
+  - ID: Questionario Parte 2
+    containsImage: 0
+    header: Controlo A
+    instructions: 
+    scale:
+    - Verdadeiro
+    - Falso
+    questions:
+    - ID: EVA_04Example
+      containsImage: 0
+      qType: Scale
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+      options: []
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    - ID: EVA_05Example
+      containsImage: 0
+      qType: Scale
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+      options: []
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    - ID: EVA_06Example
+      containsImage: 0
+      qType: Scale
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 0
+      options: []
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    randomizeOrder: 0
+    scrollQuestions: 0
+  - ID: Questionario Parte 3
+    containsImage: 1
+    header: Controlo B
+    instructions: "Esta linha explica o exerc\xEDcio/quest\xE3o a realizar nesta
+      pagina do question\xE1rio, pode ter m\xFAltiplas linhas de texto e pode tamb\xE9m
+      ser n\xE3o existente caso a p\xE1gina seja sequ\xEAncia de uma anterior com
+      instru\xE7\xF5es"
+    scale: []
+    questions:
+    - ID: SRS_01Example
+      containsImage: 1
+      qType: Option
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+      options: []
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    - ID: SRS_02Example
+      containsImage: 1
+      qType: Option
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+      options: []
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    - ID: SRS_03Example
+      containsImage: 1
+      qType: Option
+      question: "O que se est\xE1 a perguntar"
+      mandatory: 1
+      options: []
+      optionsLayout: 0
+      characterMax: 200
+      characterMin: 50
+    randomizeOrder: 0
+    scrollQuestions: 0
+  numberOfImages: 5
+  images:
+  - id: Questionario Parte 3
+    image: {fileID: 0}
+    position: 0
+    alignment: 0
+  - id: SRS_01Example
+    image: {fileID: 21300000, guid: 49b02b3e017801b44b8e3adff6631894, type: 3}
+    position: 0
+    alignment: 0
+  - id: SRS_02Example
+    image: {fileID: 0}
+    position: 0
+    alignment: 0
+  - id: SRS_03Example
+    image: {fileID: 0}
+    position: 0
+    alignment: 0
+  - id: EVA_05Imagem
+    image: {fileID: 21300000, guid: 49b02b3e017801b44b8e3adff6631894, type: 3}
+    position: 0
+    alignment: 3

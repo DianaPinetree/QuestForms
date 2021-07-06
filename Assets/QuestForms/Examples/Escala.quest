@@ -1,0 +1,80 @@
+{
+    "pages":
+    [
+        {
+            "ID": "Questionário Escala",
+            "header": "Escala de controlo",
+            "instructions": "Esta linha explica o exercício/questão a realizar nesta pagina do questionário, pode ter múltiplas linhas de texto e pode também ser não existente caso a página seja sequência de uma anterior com instruções. As instruções não contam para o número de elementos na página, sendo possível haver instruções mais as 6 perguntas máximas da página",
+            "scale":
+            [
+                "Nada ou muito ligeiramente",
+                "Ligeiramente", 
+                "Moderadamente",
+                "Bastante"
+            ],
+            "questions":
+            [
+                {
+                    "ID": "EVA_01Example",
+                    "qType": "Scale",
+                    "question": "Escala 1",
+                    "mandatory": "True"
+                },
+                {
+                    "ID": "EVA_02Example",
+                    "qType": "Scale",
+                    "question": "O que se está a perguntar",
+                    "mandatory": "False"
+                },
+                {
+                    "ID": "EVA_03Example",
+                    "qType": "Scale",
+                    "question": "O que se está a perguntar",
+                    "mandatory": "False"
+                },
+                {
+                    "ID": "EVA_04Example",
+                    "qType": "Scale",
+                    "question": "O que se está a perguntar",
+                    "mandatory": "False"
+                },
+                {
+                    "ID": "EVA_05Example",
+                    "qType": "Scale",
+                    "question": "O que se está a perguntar",
+                    "mandatory": "False"
+                },
+                {
+                    "ID": "EVA_06Example",
+                    "qType": "Scale",
+                    "question": "O que se está a perguntar",
+                    "mandatory": "False"
+                },
+                {
+                    "ID": "EVA_07Example",
+                    "qType": "Scale",
+                    "question": "O que se está a perguntar",
+                    "mandatory": "False"
+                },
+                {
+                    "ID": "EVA_08Example",
+                    "qType": "Scale",
+                    "question": "O que se está a perguntar",
+                    "mandatory": "False"
+                },
+                {
+                    "ID": "EVA_09Example",
+                    "qType": "Scale",
+                    "question": "O que se está a perguntar",
+                    "mandatory": "False"
+                },
+                {
+                    "ID": "EVA_10Example",
+                    "qType": "Scale",
+                    "question": "O que se está a perguntar",
+                    "mandatory": "False"
+                }
+            ]
+        }
+    ]
+}

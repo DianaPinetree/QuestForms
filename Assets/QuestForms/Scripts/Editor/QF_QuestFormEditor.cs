@@ -14,6 +14,7 @@ namespace QuestForms.Internal
         private SerializedProperty exportType;
         private SerializedProperty savePath;
         private SerializedProperty fileName;
+        private SerializedProperty form;
         private QF_QuestForm formMono;
         
         // Style stuff
@@ -25,6 +26,7 @@ namespace QuestForms.Internal
         private void OnEnable()
         {
             questAsset = serializedObject.FindProperty("questionnaire");
+            form = serializedObject.FindProperty("form");
             formMono = target as QF_QuestForm;
 
             exportType = serializedObject.FindProperty("exportType");
@@ -52,7 +54,7 @@ namespace QuestForms.Internal
             GUILayout.Space(10);
 
             // Update selected quest asset
-            EditorGUILayout.PropertyField(questAsset);
+            EditorGUILayout.PropertyField(form);
 
             EditorGUILayout.LabelField("Setup", titleLabel);
             // Buttons to interface with the manager
