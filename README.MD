@@ -104,13 +104,27 @@ public class Question
 
 Exporting a user's answers requires a little setup in the editor side of things.
 
-Go to your questionnaire manager and in the export settings section fill in all fields that apply to your use case. Saving locally can be done using a static file name in build, but this will override previous saves if the game/experience is ran multiple times. 
+**Saving Locally**
+
+Go to your questionnaire manager and in the export settings section fill in all fields that apply to your use case. Saving locally can be done using a static file name in build, but this may override previous saves if the game/experience is ran multiple times.
 
 To fix this you should change it via scripting on questionnaire initialization or scene load to your questionnaire scene.
 
 It is also recommended to use persistent data path in your save path variable since the game may not be always on the same computer.
 
 ![exportSettings]
+
+**Custom save/Database**
+
+In your questionnaire manager, make sure you are exporting to the file type you want, usually json works best for databases and custom solutions.
+
+In your save script subscribe the data export event thrown by the Questionnaire Manager:
+
+```cs
+ public static event System.Action<string> onExport;
+```
+
+Your save function should have a string parameter to receive the formatted file data.
 
 ## Custom Exporters
 
