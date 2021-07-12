@@ -124,6 +124,7 @@ The asset supports easy custom exporters for the answers given by the user.
 ```cs
 public string Extension => ".csv";
 ```
+* `IAnswerElement` can be extended to record more information, adding a new field should be easy enough as it will mark every script that currently implements the interface.
 
 ## Settings
 
