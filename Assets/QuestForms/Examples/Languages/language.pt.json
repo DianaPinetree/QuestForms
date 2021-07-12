@@ -8,5 +8,6 @@
     "endMessageText": "Obrigado pelo tempo despendido",
     "dataAuthText": "Autoriza a gravação anónima dos dados anteriormente respondidos?",
     "confirmText": "Sim",
-    "cancelText": "Não"
+    "cancelText": "Não",
+    "incompleteText": "Questões Inválidas. Completa as seguintes questões para prosseguir: "
 }

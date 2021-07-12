@@ -37,3 +37,5 @@ MonoBehaviour:
     dataAuthText: "Autoriza a grava\xE7\xE3o an\xF3nima dos dados anteriormente respondidos?"
     confirmText: Sim
     cancelText: "N\xE3o"
+    incompleteText: "Quest\xF5es Inv\xE1lidas. Completa as seguintes quest\xF5es
+      para prosseguir: "

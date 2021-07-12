@@ -111,7 +111,7 @@ namespace QuestForms
 
             if (invalid.Count > 0)
             {
-                StringBuilder message = new StringBuilder("Questões Inválidas. Completa as seguintes questões para prosseguir: ");
+                StringBuilder message = new StringBuilder(QF_Rules.Instance.language["incomplete message"] + ": ");
 
                 for (int i = 0; i < invalid.Count; i++)
                 {
@@ -311,6 +311,8 @@ namespace QuestForms
 
             QF_TextFont[] textElements = GetComponentsInChildren<QF_TextFont>(true);
             QF_Localiser[] localizedTextElements = GetComponentsInChildren<QF_Localiser>(true);
+            QF_Color[] coloredElements = GetComponentsInChildren<QF_Color>(true);
+
             foreach(QF_TextFont textFont in textElements)
             {
                 textFont.OnValidate();
@@ -319,6 +321,11 @@ namespace QuestForms
             foreach(QF_Localiser localizedText in localizedTextElements)
             {
                 localizedText.OnValidate();
+            }
+
+            foreach(QF_Color colorImg in coloredElements)
+            {
+                colorImg.OnValidate();
             }
         }
 

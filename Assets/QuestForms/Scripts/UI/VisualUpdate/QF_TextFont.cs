@@ -15,6 +15,7 @@ namespace QuestForms
         }
 
         [SerializeField] private TextType textElementType = TextType.Body;
+        [SerializeField] private bool changeColor = true;
         private TextMeshProUGUI text;
 
         private void Start() 
@@ -37,6 +38,11 @@ namespace QuestForms
             else
             {
                 text.font = QF_Rules.TextFont;
+            }
+            
+            if (changeColor)
+            {
+                text.color = QF_Rules.Instance.textColor;
             }
         }
     }

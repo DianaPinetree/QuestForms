@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8890678426009953677}
   - component: {fileID: 8890678426009953676}
   - component: {fileID: 5379621240291074906}
+  - component: {fileID: 2569625241104086418}
   m_Layer: 5
   m_Name: QF_QuestionGroup
   m_TagString: Untagged
@@ -80,13 +81,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8890678426009953673}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.84313726, b: 0.84313726, a: 1}
+  m_Color: {r: 1, g: 0.8431373, b: 0.8431373, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -115,4 +116,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e64c8886f018204eb56e3c1e355aef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mandatory: 0
   elements: []
+  headerText: {fileID: 0}
+  backdrop: {fileID: 8890678426009953676}
+--- !u!114 &2569625241104086418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8890678426009953673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c2f879f003b448a65acfe9ed1b1f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 3

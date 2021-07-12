@@ -152,7 +152,9 @@ namespace QuestForms.Internal
             settings.language.backButtonText = EditorGUILayout.TextField("Back Button Text", settings.language.backButtonText);
             settings.language.clearButtonText = EditorGUILayout.TextField("Clear Button Text", settings.language.clearButtonText);
             settings.language.finishButtonText = EditorGUILayout.TextField("Finish Button Text", settings.language.finishButtonText);
+            
             settings.language.instructionsText = EditorGUILayout.TextField("Instructions Text", settings.language.instructionsText);
+            settings.language.incompleteText = EditorGUILayout.TextField("Incomplete page message", settings.language.incompleteText);
 
             GUILayout.Space(10);
             GUILayout.Label("Confirmation Page", EditorStyles.boldLabel);

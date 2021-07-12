@@ -46,6 +46,8 @@ namespace QuestForms
         private static readonly string CONFIRM_TEXT = "Sim";
         private static readonly string CANCEL_TEXT = "Não";
 
+        private static readonly string INCOMPLETE_QUESTIONS = "Questões Inválidas. Completa as seguintes questões para prosseguir: ";
+
         
         #endregion
         /// <summary>
@@ -129,6 +131,7 @@ namespace QuestForms
             language.dataAuthText = DATA_AUTH_TEXT;
             language.confirmText = CONFIRM_TEXT;
             language.cancelText = CANCEL_TEXT;
+            language.incompleteText = INCOMPLETE_QUESTIONS;
         }
 
         #region Editor Menu Items
@@ -197,6 +200,7 @@ namespace QuestForms
         public string dataAuthText;
         public string confirmText;
         public string cancelText;
+        public string incompleteText;
         private IDictionary<string, string> languageTable;
         public IDictionary<string, string> LanguageTable 
         {
@@ -239,6 +243,7 @@ namespace QuestForms
             languageTable.Add("data authorization", dataAuthText);
             languageTable.Add("confirm", confirmText);
             languageTable.Add("cancel", cancelText);
+            languageTable.Add("incomplete message", incompleteText);
         }
     }
 }
