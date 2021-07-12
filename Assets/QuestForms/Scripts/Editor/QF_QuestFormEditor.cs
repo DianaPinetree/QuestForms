@@ -11,10 +11,13 @@ namespace QuestForms.Internal
     {
         // Variables to change
         private SerializedProperty questAsset;
+        private SerializedProperty saveDataLocally;
+        private SerializedProperty usePersistentDataPath;
         private SerializedProperty exportType;
         private SerializedProperty savePath;
         private SerializedProperty fileName;
         private SerializedProperty form;
+
         private QF_QuestForm formMono;
         
         // Style stuff
@@ -30,6 +33,8 @@ namespace QuestForms.Internal
             formMono = target as QF_QuestForm;
 
             exportType = serializedObject.FindProperty("exportType");
+            saveDataLocally = serializedObject.FindProperty("saveDataLocally");
+            usePersistentDataPath = serializedObject.FindProperty("usePersistentDataPath");
             savePath = serializedObject.FindProperty("savePath");
             fileName = serializedObject.FindProperty("fileName");
 
@@ -73,19 +78,32 @@ namespace QuestForms.Internal
 
         private void ExportSelection()
         {
+            EditorGUILayout.PropertyField(saveDataLocally);
+
+            if (!saveDataLocally.boolValue) return;
+
+            EditorGUILayout.PropertyField(usePersistentDataPath);
+
+            if (usePersistentDataPath.boolValue)
+            {
+                savePath.stringValue = Application.persistentDataPath;
+            }
 
             EditorGUILayout.PropertyField(exportType);
-
             EditorGUILayout.PropertyField(fileName);
 
+            GUI.enabled = !usePersistentDataPath.boolValue;
             GUILayout.BeginHorizontal();
 
             EditorGUILayout.PropertyField(savePath);
 
-            if (GUILayout.Button("Select Path", GUILayout.MaxWidth(100)))
+            if (GUILayout.Button("Select Path", GUILayout.MaxWidth(100)) 
+                && !usePersistentDataPath.boolValue)
             {
+                string startFolder = string.IsNullOrEmpty(savePath.stringValue) ? "" : savePath.stringValue;
+
                 string p = EditorUtility.OpenFolderPanel(
-                    "Save Questionnaire Data Folder", "", ""
+                    "Save Questionnaire Data Folder", startFolder, ""
                 );
 
                 if (!string.IsNullOrEmpty(p))
@@ -93,8 +111,9 @@ namespace QuestForms.Internal
                     savePath.stringValue = p;
                 }
             }
-
             GUILayout.EndHorizontal();
+
+            GUI.enabled = !GUI.enabled;
         }
 
         private void Navigation()

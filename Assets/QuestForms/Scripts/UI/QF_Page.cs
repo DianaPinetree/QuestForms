@@ -195,7 +195,7 @@ namespace QuestForms
 
             if (!string.IsNullOrEmpty(page.instructions))
             {
-                ContentText(content, "Instruções: ", page.instructions);
+                ContentText(content, $"{QF_Rules.Instance.language["instructions"]}: ", page.instructions);
             }
 
             bool scaleQuestion = false;

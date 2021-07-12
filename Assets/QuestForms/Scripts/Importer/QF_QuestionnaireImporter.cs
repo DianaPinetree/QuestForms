@@ -24,7 +24,7 @@ namespace QuestForms.Internal
             
             if (quest == null)
             {
-                quest = CreateAsset<QF_Questionnaire>(ctx.assetPath);
+                quest = Util.CreateAsset<QF_Questionnaire>(ctx.assetPath, select: true);
                 Debug.Log("Created new Questionnaire SO from imported asset");
             }
 
@@ -39,9 +39,33 @@ namespace QuestForms.Internal
                 ctx.AddObjectToAsset("Form", questFile, thumb);
                 ctx.SetMainObject(questFile);
             }
+
+            ctx.AddObjectToAsset("Scriptable Object Questionnaire", quest);
         }
 
-        public static T CreateAsset<T>(string path) where T : ScriptableObject
+        
+    }
+
+    [System.Serializable]
+    class ImportQuest
+    {
+        public Page[] pages;
+    }
+}
+
+namespace QuestForms
+{
+    public static class Util
+    {
+        /// <summary>
+        /// Creates a scriptable object asset in the given path
+        /// </summary>
+        /// <param name="path">Path to create the scriptable object at, starting at the assets folder. Ex.: (Assets/Resources)</param>
+        /// <param name="assetName">File name of the asset, if no name is given it will create the asset with the blueprint "New AssetTypeName"</param>
+        /// <param name="select">Should select the asset in editor after creating</param>
+        /// <typeparam name="T">Scriptable Object type of the asset to be created</typeparam>
+        /// <returns> The created asset instance</returns>
+        public static T CreateAsset<T>(string path, string assetName = "", bool select = false) where T : ScriptableObject
         {
             T asset = ScriptableObject.CreateInstance<T>();
 
@@ -54,22 +78,24 @@ namespace QuestForms.Internal
                 path = path.Replace(Path.GetFileName(path), "");
             }
 
-            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/New " + typeof(T).Name + ".asset");
+            if (assetName == string.Empty)
+            {
+                assetName = "New " + typeof(T).Name;
+            }
+            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + assetName + ".asset");
 
             AssetDatabase.CreateAsset(asset, assetPathAndName);
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            EditorUtility.FocusProjectWindow();
-            Selection.activeObject = asset;
+
+            if (select)
+            {
+                EditorUtility.FocusProjectWindow();
+                Selection.activeObject = asset;
+            }
 
             return asset;
         }
-    }
-
-    [System.Serializable]
-    class ImportQuest
-    {
-        public Page[] pages;
     }
 }

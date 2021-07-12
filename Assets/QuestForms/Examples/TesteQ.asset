@@ -87,7 +87,7 @@ MonoBehaviour:
       - 2
       - 3
       - 4
-      optionsLayout: 0
+      optionsLayout: 1
       characterMax: 200
       characterMin: 50
     randomizeOrder: 0

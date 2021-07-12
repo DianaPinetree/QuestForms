@@ -1,0 +1,12 @@
+{
+    "backButtonText": "Previous",
+    "nextButtonText": "Continue",
+    "clearButtonText": "Clear",
+    "finishButtonText": "End",
+    "instructionsText": "Instructions",
+    "endpageHeaderText": "Send and End",
+    "endMessageText": "Thank you for your time",
+    "dataAuthText": "Do you agree to send the previously filled data anonymously?",
+    "confirmText": "Yes",
+    "cancelText": "No"
+}

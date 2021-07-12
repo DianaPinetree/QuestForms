@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 6216621671909384151}
   - component: {fileID: 6216621671909384150}
   - component: {fileID: 6216621671909384168}
+  - component: {fileID: 4071817535553984003}
   m_Layer: 5
   m_Name: Scale Element
   m_TagString: Untagged
@@ -233,6 +234,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &4071817535553984003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6216621671909384148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665dc1df7a6636a488ba274def2cc3eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElementType: 1
 --- !u!1 &6216621672531583610
 GameObject:
   m_ObjectHideFlags: 0

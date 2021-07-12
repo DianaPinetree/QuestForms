@@ -12,6 +12,9 @@ namespace QuestForms
     /// </summary>
     public class QF_QuestForm : MonoBehaviour
     {
+        /// <summary>
+        /// Array of questionnaires to be loaded, this array is combined and put into questionnaire variable
+        /// </summary>
         [SerializeField] private QF_Questionnaire[] form;
         /// <summary>
         /// Currently loaded questionnaire
@@ -21,13 +24,43 @@ namespace QuestForms
         /// Page list of gameobjects pages
         /// </summary>
         [SerializeField] private List<QF_Page> pagesInstance;
+
+        // Save data variables
+        /// <summary>
+        /// If the questionnaire should be saved locally
+        /// </summary>
+        [SerializeField] private bool saveDataLocally;
+        /// <summary>
+        /// Save path should be application persistent data path
+        /// </summary>
+        
+        [SerializeField, Tooltip("Use this when you don't know which computer this will run on")] 
+        private bool usePersistentDataPath;
+        /// <summary>
+        /// Export type name of the questionnaire answers
+        /// </summary>
         [SerializeField, ExporterList] private string exportType;
+        /// <summary>
+        /// Export file name
+        /// </summary>
         [SerializeField] private string fileName = "MyQuestionnaireData";
+        /// <summary>
+        /// Full save path
+        /// </summary>
         [SerializeField] private string savePath;
 
+        /// <summary>
+        /// Questions in the questionnaire, in the generated order
+        /// </summary>
         public List<IAnswerElement> questions = new List<IAnswerElement>();
 
+        /// <summary>
+        /// Retrieve the complete currently loaded questionnaire;
+        /// </summary>
         public QF_Questionnaire QuestSource => questionnaire;
+        /// <summary>
+        /// Gameobject Page list of the created questionnaire 
+        /// </summary>
         public List<QF_Page> Pages => pagesInstance;
 
         /// <summary>
@@ -40,6 +73,10 @@ namespace QuestForms
             pageDisplayIndex = 0;
         }
 
+        /// <summary>
+        /// Unity start, retrieves questions in the generated questionnaire and initializes pages
+        /// If a page is meant to be randomize, randomize orders
+        /// </summary>
         private void Start()
         {
             questions = new List<IAnswerElement>(GetComponentsInChildren<IAnswerElement>(true));
@@ -157,17 +194,28 @@ namespace QuestForms
             page.gameObject.SetActive(state);
         }
 
+        /// <summary>
+        /// Sets page state by index of pageInstance list
+        /// </summary>
+        /// <param name="page">index of the page to change state</param>
+        /// <param name="state"> state to change to</param>
         public void SetPage(int page, bool state)
         {
             SetPage(pagesInstance[page], state);
         
         }
 
+        /// <summary>
+        /// Calls an event when the questionnaire ends
+        /// </summary>
         public void OnQuestionnaireEnd()
         {
             onQuestionnaireEnd?.Invoke();
         }
 
+        /// <summary>
+        /// Exports the answers in the questionnaire, if it is meant to save to a file, export it
+        /// </summary>
         public void ExportAnswers()
         {
             Type t = System.Type.GetType(exportType);
@@ -175,15 +223,27 @@ namespace QuestForms
 
             string data = exporter.FormatData(questions);
 
-            if (!string.IsNullOrEmpty(savePath))
+            if (saveDataLocally && !string.IsNullOrEmpty(savePath))
             {
                 SaveDataToFile(data, fileName, exporter.Extension);
             }
+
             onExport?.Invoke(data);
         }
 
+        /// <summary>
+        /// Creates a file and dumps the data variable into it, saving it into the savePath path
+        /// </summary>
+        /// <param name="data">formatted data string</param>
+        /// <param name="fileName">name of the file to create</param>
+        /// <param name="extension">extension of the file</param>
         private void SaveDataToFile(string data, string fileName, string extension)
         {
+            if (usePersistentDataPath)
+            {
+                savePath = Application.persistentDataPath;
+            }
+
             string filePath = savePath + "/" + fileName + extension;
 
             int count = 0;
@@ -199,7 +259,13 @@ namespace QuestForms
             }
         }
 
+        /// <summary>
+        /// Called when the questionnaire ends, use this to change scene, close the application etc..
+        /// </summary>
         public static event System.Action onQuestionnaireEnd;
+        /// <summary>
+        /// Export callback, called when a questionnaire is exported, with the exported data as the parameter
+        /// </summary>
         public static event System.Action<string> onExport;
 
         // Dont mess with the UI generation, might break if you don't know what you're doing
@@ -242,6 +308,18 @@ namespace QuestForms
 
             // Setup page structure
             SetupStructure();
+
+            QF_TextFont[] textElements = GetComponentsInChildren<QF_TextFont>(true);
+            QF_Localiser[] localizedTextElements = GetComponentsInChildren<QF_Localiser>(true);
+            foreach(QF_TextFont textFont in textElements)
+            {
+                textFont.OnValidate();
+            }
+
+            foreach(QF_Localiser localizedText in localizedTextElements)
+            {
+                localizedText.OnValidate();
+            }
         }
 
         public void CleanUp()
