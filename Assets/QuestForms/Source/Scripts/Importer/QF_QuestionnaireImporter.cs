@@ -39,11 +39,7 @@ namespace QuestForms.Internal
                 ctx.AddObjectToAsset("Form", questFile, thumb);
                 ctx.SetMainObject(questFile);
             }
-
-            ctx.AddObjectToAsset("Scriptable Object Questionnaire", quest);
         }
-
-        
     }
 
     [System.Serializable]

@@ -27,15 +27,14 @@ MonoBehaviour:
   textColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   backgroundColor: {r: 0.95, g: 0.95, b: 0.95, a: 1}
   language:
-    backButtonText: Anterior
-    nextButtonText: Continuar
-    clearButtonText: Limpar
-    finishButtonText: Terminar
-    instructionsText: "Instru\xE7\xF5es"
-    endpageHeaderText: Terminar e Enviar
-    endMessageText: Obrigado pelo tempo despendido
-    dataAuthText: "Autoriza a grava\xE7\xE3o an\xF3nima dos dados anteriormente respondidos?"
-    confirmText: Sim
-    cancelText: "N\xE3o"
-    incompleteText: "Quest\xF5es Inv\xE1lidas. Completa as seguintes quest\xF5es
-      para prosseguir: "
+    backButtonText: Previous
+    nextButtonText: Continue
+    clearButtonText: Clear
+    finishButtonText: End
+    instructionsText: Instructions
+    endpageHeaderText: Send and End
+    endMessageText: Thank you for your time
+    dataAuthText: Do you agree to send the previously filled data anonymously?
+    confirmText: Yes
+    cancelText: No
+    incompleteText: 
