@@ -60,7 +60,7 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
+  m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
 --- !u!1 &6014600745799637429

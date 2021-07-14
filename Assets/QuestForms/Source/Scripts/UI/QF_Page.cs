@@ -282,9 +282,9 @@ namespace QuestForms
                         layout.childAlignment = imgInfo.alignment;
 
                         // Set Image ratio
-                        float ratio = img.sprite.rect.height / img.sprite.rect.width;
                         img.sprite = imgInfo.image;
-                        img.rectTransform.sizeDelta = new Vector2(300 / ratio, 300);
+                        float ratio = img.sprite.texture.width / (float)img.sprite.texture.height;
+                        img.rectTransform.sizeDelta = new Vector2(300 * ratio, 300);
 
                         qGroup?.AddElement(questionnaireImage, (int)imgInfo.position + 1);
                     }

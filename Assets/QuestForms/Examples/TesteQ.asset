@@ -174,18 +174,18 @@ MonoBehaviour:
     position: 0
     alignment: 0
   - id: SRS_01Example
-    image: {fileID: 21300000, guid: 49b02b3e017801b44b8e3adff6631894, type: 3}
+    image: {fileID: 21300000, guid: 0c8eca4e338d3d74a8039ab0cee68803, type: 3}
     position: 0
     alignment: 0
   - id: SRS_02Example
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: 0c8eca4e338d3d74a8039ab0cee68803, type: 3}
     position: 0
     alignment: 0
   - id: SRS_03Example
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: 0c8eca4e338d3d74a8039ab0cee68803, type: 3}
     position: 0
     alignment: 0
   - id: EVA_05Imagem
-    image: {fileID: 21300000, guid: 49b02b3e017801b44b8e3adff6631894, type: 3}
+    image: {fileID: 21300000, guid: 0c8eca4e338d3d74a8039ab0cee68803, type: 3}
     position: 0
     alignment: 3
